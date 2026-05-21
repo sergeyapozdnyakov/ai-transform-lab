@@ -1,65 +1,114 @@
 import { useState, useMemo } from "react";
 import { useI18n } from "../../lib/i18n";
+import { fmtNum } from "../../lib/format";
 
-const AUTOMATION = 0.6;
-const WEEKS = 48; // working weeks
-const IMPL_COST = 2_500_000; // ₽ baseline implementation cost
+const AUTOMATION = 0.62;     // McKinsey benchmark, conservative lower bound
+const QUALITY_LOSS = 0.18;   // share of cost lost to errors/rework
+const QUALITY_RECOV = 0.4;   // fraction of quality loss recovered with AI
+const WEEKS = 47;            // working weeks/year
+const IMPL_BASE = 850_000;   // base implementation cost (₽)
+const IMPL_PER_PERSON = 34_000; // ≈ size × 0.04 of base
 
-function fmtCurrency(n: number) {
-  return Math.round(n).toLocaleString("ru-RU") + " ₽";
+function fmtRub(n: number) {
+  return `${fmtNum(n)} ₽`;
 }
 
 export function Widget3ROI({ onCta }: { onCta: () => void }) {
   const { t } = useI18n();
-  const [team, setTeam] = useState(40);
-  const [hours, setHours] = useState(8);
-  const [rate, setRate] = useState(2000);
+  const [team, setTeam] = useState(35);
+  const [hours, setHours] = useState(12);
+  const [rate, setRate] = useState(1800);
 
   const calc = useMemo(() => {
     const current = team * hours * WEEKS * rate;
-    const saving = current * AUTOMATION;
-    const payback = Math.max(1, Math.round((IMPL_COST / saving) * 12));
-    return { current, saving, payback };
+    const automationSaving = current * AUTOMATION;
+    const errorSaving = current * QUALITY_LOSS * QUALITY_RECOV;
+    const total = automationSaving + errorSaving;
+    const impl = Math.min(4_500_000, IMPL_BASE + team * IMPL_PER_PERSON);
+    const payback = Math.max(1, Math.round((impl / total) * 12));
+    const afterPct = Math.max(8, Math.round((1 - AUTOMATION) * 100));
+    return { current, automationSaving, errorSaving, total, impl, payback, afterPct };
   }, [team, hours, rate]);
 
   return (
     <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/60 p-6 md:p-8">
-      <div className="grid md:grid-cols-[1fr_1.1fr] gap-8">
+      <div className="grid lg:grid-cols-[1fr_1.15fr] gap-8">
         {/* Inputs */}
         <div className="space-y-6">
           <SliderRow label={t.roi.teamSize} value={team} min={5} max={200} step={1} onChange={setTeam} display={`${team}`} />
-          <SliderRow label={t.roi.hours} value={hours} min={1} max={20} step={1} onChange={setHours} display={`${hours} ч`} />
-          <SliderRow label={t.roi.rate} value={rate} min={500} max={5000} step={100} onChange={setRate} display={`${rate.toLocaleString("ru-RU")} ₽`} />
+          <SliderRow label={t.roi.hours} value={hours} min={2} max={25} step={1} onChange={setHours} display={`${hours} ч`} />
+          <SliderRow label={t.roi.rate} value={rate} min={500} max={5000} step={100} onChange={setRate} display={`${fmtNum(rate)} ₽`} />
+
+          {/* Inefficiency bar */}
+          <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 p-4 space-y-3">
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
+                <span className="text-[var(--color-accent-amber)]">{t.roi.currentBar}</span>
+                <span className="text-[var(--color-text-mono)] tabular-nums">100%</span>
+              </div>
+              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
+                <div className="h-full bg-[var(--color-accent-amber)]/80" style={{ width: "100%" }} />
+              </div>
+            </div>
+
+            <div className="relative pl-3">
+              <div className="absolute left-0 top-0 bottom-0 w-px border-l border-dashed border-[var(--color-accent-amber)]/40 animate-pulse" />
+              <span className="font-mono text-[9px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">
+                {t.roi.deadZone}
+              </span>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
+                <span className="text-[var(--color-accent-teal)]">{t.roi.afterBar}</span>
+                <span className="text-[var(--color-text-mono)] tabular-nums">{calc.afterPct}%</span>
+              </div>
+              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
+                <div
+                  className="h-full bg-[var(--color-accent-teal)] transition-all duration-500"
+                  style={{ width: `${calc.afterPct}%` }}
+                />
+              </div>
+            </div>
+          </div>
+
           <p className="text-[11px] font-mono leading-relaxed text-[var(--color-text-mono)] border-t border-[var(--color-border-subtle)] pt-4">
             {t.roi.disclaimer}
           </p>
         </div>
 
         {/* Outputs */}
-        <div className="space-y-4">
-          <Stat label={t.roi.currentCost} value={fmtCurrency(calc.current)} tone="amber" />
-          <Stat label={t.roi.saving} value={fmtCurrency(calc.saving)} tone="teal" sub={`−${Math.round(AUTOMATION * 100)}%`} />
+        <div className="space-y-3">
+          <Stat label={t.roi.currentCost} value={fmtRub(calc.current)} tone="amber" />
+          <Stat label={t.roi.saving} value={fmtRub(calc.automationSaving)} tone="teal" sub="−62%" />
+          <Stat label={t.roi.errorSaving} value={fmtRub(calc.errorSaving)} tone="teal" small />
 
-          {/* Bar chart */}
-          <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-mono)]">CURRENT → AFTER AI</span>
+          <div className="rounded-md border border-[var(--color-accent-teal)]/40 bg-[var(--color-accent-teal)]/8 px-4 py-4">
+            <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-accent-teal)] mb-1">
+              {t.roi.totalSaving}
             </div>
-            <div className="space-y-2">
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
-                <div className="h-full bg-[var(--color-accent-amber)]/80" style={{ width: "100%" }} />
-              </div>
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
-                <div className="h-full bg-[var(--color-accent-teal)] transition-all duration-500" style={{ width: `${(1 - AUTOMATION) * 100}%` }} />
-              </div>
+            <div className="font-mono text-[30px] md:text-[36px] tabular-nums leading-none text-[var(--color-text-primary)]">
+              {fmtRub(calc.total)}
             </div>
           </div>
 
-          <div className="flex items-center justify-between rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-mono)]">{t.roi.payback}</span>
-            <span className="font-mono text-xl tabular-nums text-[var(--color-text-primary)]">
-              {calc.payback} <span className="text-sm text-[var(--color-text-secondary)]">{t.roi.months}</span>
-            </span>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
+                {t.roi.implCost}
+              </div>
+              <div className="font-mono text-[16px] tabular-nums text-[var(--color-text-primary)]">
+                {fmtRub(calc.impl)}
+              </div>
+            </div>
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
+                {t.roi.payback}
+              </div>
+              <div className="font-mono text-[16px] tabular-nums text-[var(--color-text-primary)]">
+                {calc.payback} <span className="text-[12px] text-[var(--color-text-secondary)]">{t.roi.months}</span>
+              </div>
+            </div>
           </div>
 
           <button
@@ -89,13 +138,18 @@ function SliderRow({ label, value, min, max, step, onChange, display }: {
   );
 }
 
-function Stat({ label, value, tone, sub }: { label: string; value: string; tone: "teal" | "amber"; sub?: string }) {
+function Stat({ label, value, tone, sub, small }: { label: string; value: string; tone: "teal" | "amber"; sub?: string; small?: boolean }) {
   const color = tone === "teal" ? "#14B8A6" : "#F59E0B";
   return (
-    <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-4">
-      <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">{label}</div>
+    <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+      <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">{label}</div>
       <div className="flex items-baseline gap-3">
-        <div className="font-mono text-[28px] md:text-[32px] tabular-nums leading-none" style={{ color }}>{value}</div>
+        <div
+          className="font-mono tabular-nums leading-none"
+          style={{ color, fontSize: small ? "20px" : "24px" }}
+        >
+          {value}
+        </div>
         {sub && <span className="font-mono text-[12px]" style={{ color }}>{sub}</span>}
       </div>
     </div>
