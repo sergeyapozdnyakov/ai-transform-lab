@@ -19,10 +19,10 @@ function Index() {
         <main>
           <Hero openModal={openModal} />
           <Problem />
-          <Approach />
+          <Approach openModal={openModal} />
           <Widget2Section />
           <WhoFor />
-          <Expert />
+          <Expert openModal={openModal} />
           <Cases />
           <ROISection openModal={openModal} />
           <Deliverable />
