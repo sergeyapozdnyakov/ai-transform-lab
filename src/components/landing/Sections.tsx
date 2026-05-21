@@ -592,9 +592,7 @@ export function Footer() {
             <div className="font-mono text-[14px] font-semibold tracking-[0.04em]">
               AI<span className="text-[var(--color-accent-indigo)]">.</span>AUDIT
             </div>
-            <p className="mt-2 text-[12px] text-[var(--color-text-mono)] max-w-[220px] leading-relaxed">
-              {t.lang === "ru" ? "" : ""}© 2026
-            </p>
+            <p className="mt-2 text-[12px] text-[var(--color-text-mono)] max-w-[220px] leading-relaxed">© 2026</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
             {t.footer.cols.map((col, i) => (
