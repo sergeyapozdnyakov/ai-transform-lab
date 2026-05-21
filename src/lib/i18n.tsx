@@ -470,15 +470,37 @@ const dict = {
     },
     faq: {
       label: "07 / FAQ",
-      items: [
-        { q: "How much does the audit cost?", a: "Fixed price — €9,500 for 3 weeks. Includes the full team, the document and the board presentation." },
-        { q: "Who does the work?", a: "Me personally + 1–2 architects per engagement. No juniors, no account managers. All interviews and the final defense — by me." },
-        { q: "Where do the calculator numbers come from?", a: "Averaged figures from McKinsey State of AI 2024, Deloitte AI Adoption Survey and BCG GenAI Value Report. The 62% automation share is the lower bound of optimistic benchmarks (55–70%). Real numbers get calibrated during the first audit." },
-        { q: "What if we already have AI pilots?", a: "Even better. The audit will show which ones to scale and which to shut down. Savings from shutting down often beat new launches." },
-        { q: "Will you sign an NDA?", a: "Yes, a standard mutual NDA before the first interview. We can use your template." },
-        { q: "Remote?", a: "Yes. Interviews via Zoom. One on-site visit at our cost if needed." },
-        { q: "What's your usual stack?", a: "Stack depends on the task. Often: OpenAI / Anthropic for LLM, LangGraph or custom orchestration, pgvector for RAG, n8n / Temporal for workflows." },
-        { q: "When's the next slot?", a: "Q2 2026 is open. 2 of 4 slots left. Start within 2 weeks of signing." },
+      notFoundText: "Didn't find an answer? Message me on Telegram — I reply personally within a few hours.",
+      notFoundCta: "Open Telegram",
+      telegramUrl: "https://t.me/",
+      groups: [
+        {
+          title: "Pricing & terms",
+          items: [
+            { q: "How much does the audit cost?", a: "The audit costs €3,000–€4,800 depending on company size and the number of processes to analyze. For 50–150 employees it's usually €3,000–€3,600; for 150–500 — €3,600–€4,800.\n\nIncluded: up to 12 interviews with executives and key staff, analysis of the existing IT landscape, a 30–50 page deliverable, an executive presentation, and 2 weeks of post-audit support for follow-up questions.\n\nThis is a fixed price — not hourly. If the work turns out more complex than expected, you don't pay extra." },
+            { q: "Is that expensive or cheap by market standards?", a: "For 2026 this is the lower bound for a senior CIO with 25 years of experience. Large integrators charge €15k–€40k for a comparable audit — but that price covers a 4–6 person team, brand premium, and agency overhead.\n\nI work solo, without agency markups. You pay for expertise, not for someone else's infrastructure. Comparable fractional CIO consulting in the US/EU costs $15k–25k." },
+            { q: "What if after the audit I don't want to implement anything?", a: "That's a completely normal outcome and I warn every client about it upfront. Roughly 1 in 5 audits ends with a recommendation not to implement AI right now — because the company has more pressing problems (messy data, missing processes, organizational issues). That's still a useful result.\n\nI'm not incentivized to «sell implementation at any cost» — my reputation works on a long timeline, and a failed project costs me more than a lost contract." },
+            { q: "Do I have to implement with you afterwards?", a: "No. The roadmap is written so any competent vendor can execute it — you get technical specs, estimates, and stack selection criteria. If you have an in-house team, they can implement. If you want a different vendor, hand them the report.\n\nAbout 60% of clients do continue with me — because I'm already deep in context and it's faster. But it's your choice, not a condition." },
+          ],
+        },
+        {
+          title: "Process & deliverables",
+          items: [
+            { q: "What exactly do I get at the end?", a: "Three tangible outputs.\n\nFirst — a 30–50 page report: map of current processes with metrics, identified AI implementation points prioritized by ROI and complexity, investment and timeline estimates per direction, risk analysis, stack and vendor recommendations.\n\nSecond — a 6–12 month roadmap: what to implement in what order, dependencies between projects, expected metrics at each stage.\n\nThird — 1–2 quick wins you can ship right away, within a month of the audit, with your own resources or minimal help. This gives the audit immediate payback.\n\nPlus a board/shareholder presentation, if needed." },
+            { q: "Is 3 weeks really realistic?", a: "Yes, if your side assigns a coordinator who helps schedule interviews and gather initial data. The «3 weeks» scenario assumes I run 8–12 interviews in the first 5–7 business days, which requires slots in executives' calendars.\n\nIf coordination drags, the real timeline can stretch to 4–5 weeks. Both scenarios are in the contract — you know upfront what speed depends on." },
+            { q: "What if we don't have clean data and proper analytics?", a: "That's typical — about 7 in 10 mid-market companies have this issue. It's not a contraindication for the audit, it's one of the reasons to do it.\n\nPart of the audit is a data readiness assessment. If data isn't ready, the roadmap will include a separate «data foundation» phase of 2–4 months before the main AI rollouts. Without that phase any AI project will fail, and it's better to know this before you spend millions." },
+            { q: "Where do the ROI calculator and case numbers come from?", a: "Important question — answering in depth.\n\nThe ROI calculator uses averages from public research: McKinsey «State of AI» (2024), Deloitte «AI Adoption Survey», and BCG «GenAI Value Creation Report». Specifically — median automation of routine tasks in mid-market is estimated at 55–70%, I use a conservative 62%. Error reduction is 35–45% in the same sources, I use 40%.\n\nThe hero demo numbers (66% cycle reduction, 75% error reduction) are medians from 6 AI implementation projects in manufacturing companies of 80–300 people that I personally analyzed in 2024–2025. I deliberately don't name specific clients — that's an NDA matter. On email request I can share anonymized cases with references.\n\nImportant: I don't use «outlier» cases (like «saved 95%») — they're unrepresentative and create inflated expectations. The site deliberately shows «good but achievable» results." },
+          ],
+        },
+        {
+          title: "Trust & risk",
+          items: [
+            { q: "NDA and confidentiality? We have sensitive data.", a: "NDA is signed before any interviews, in standard mutual form. Happy to use your NDA template or propose mine.\n\nDuring the audit I don't get access to production systems or your customers' real data — only to process descriptions, aggregated metrics, and test/demo data. This is intentional architecture: the less access I have to sensitive information, the lower your risk.\n\nAll audit artifacts (interview recordings, notes, documents) are stored encrypted and deleted 90 days after project handover, unless agreed otherwise." },
+            { q: "How are you different from a large integrator?", a: "Three key differences.\n\nDepth over breadth. An integrator sells you a solution from their portfolio and is incentivized to make it bigger. I don't sell prebuilt solutions — I find the optimal path for your situation, including the option «don't implement AI right now».\n\nSpeed. An integrator's audit takes 6–12 weeks because it goes through a chain of account manager, presales, architect, designer, project manager. Mine takes 3 weeks because all the work is done by one person with 25 years of experience.\n\nPersonal accountability. On an integrator project you talk to a PM, while the actual work is done by mid-level developers. With me the analysis and decisions are made by the same person who signed the contract.\n\nThe honest downside: I'm not a fit if you need a 50+ person-month project with parallel development across 5 directions. That's integrator territory." },
+            { q: "Do you work with international clients?", a: "Yes. English is a working language; I have experience with international teams and partners. For international clients the audit follows the same methodology, priced at $5–9k depending on company size.\n\nDocumentation is prepared in English; the presentation can be English or bilingual. Time zones — I work comfortably from GMT−5 to GMT+8." },
+            { q: "What if I'm not satisfied with the result?", a: "The contract includes a rework guarantee: if the final report doesn't match the agreed scope or has material gaps — rework at my cost, until agreed quality is reached.\n\nA money refund isn't offered, because the work has been done and IP transferred. In recent years there have been two real cases of client dissatisfaction — both resolved by rework within a week.\n\nBefore the project starts we fix the acceptance criteria in the SOW — what must be in the report, to what level of detail, which questions must be answered. This eliminates 90% of potential disagreements." },
+          ],
+        },
       ],
     },
     finalCta: {
