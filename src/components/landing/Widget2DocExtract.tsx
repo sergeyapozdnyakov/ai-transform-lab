@@ -55,13 +55,11 @@ export function Widget2DocExtract() {
                 <span className="text-[var(--color-text-mono)]">SKU</span>
                 <span className="text-[var(--color-text-mono)]">QTY</span>
                 <span className="text-[var(--color-text-mono)] text-right">SUM</span>
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <>
-                    <span key={"a" + i} className="text-[var(--color-text-secondary)]">TP-{1000 + i}</span>
-                    <span key={"b" + i} className="text-[var(--color-text-secondary)]">{12 + i}</span>
-                    <span key={"c" + i} className="text-[var(--color-text-primary)] text-right">{(12500 * (i + 1)).toLocaleString()}</span>
-                  </>
-                ))}
+                {Array.from({ length: 4 }).flatMap((_, i) => [
+                  <span key={"a" + i} className="text-[var(--color-text-secondary)]">TP-{1000 + i}</span>,
+                  <span key={"b" + i} className="text-[var(--color-text-secondary)]">{12 + i}</span>,
+                  <span key={"c" + i} className="text-[var(--color-text-primary)] text-right">{(12500 * (i + 1)).toLocaleString()}</span>,
+                ])}
               </div>
               <div className="mt-3 flex justify-between border-t border-[var(--color-border-subtle)] pt-2">
                 <span className="text-[var(--color-text-secondary)]">TOTAL</span>
