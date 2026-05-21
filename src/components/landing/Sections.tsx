@@ -402,47 +402,118 @@ function Counter({ to }: { to: number }) {
   return <span ref={ref} className="tabular-nums">{n}</span>;
 }
 
-export function Expert() {
+export function Expert({ openModal }: { openModal: () => void }) {
   const { t } = useI18n();
+  const e = t.expert;
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--color-border-subtle)]">
-      <Container>
-        <FadeIn><SectionLabel>{t.expert.label}</SectionLabel></FadeIn>
-        <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 mt-8">
-          <FadeIn>
-            <div className="space-y-4">
-              {t.expert.bio.map((p, i) => (
-                <p key={i} className="text-[16px] md:text-[17px] leading-[1.65] text-[var(--color-text-primary)]">{p}</p>
-              ))}
-            </div>
+    <section className="border-t border-[var(--color-border-subtle)]">
+      <div className="py-24 md:py-32">
+        <Container>
+          <FadeIn><SectionLabel>{e.label}</SectionLabel></FadeIn>
+          <FadeIn delay={0.05}>
+            <h2 className="text-[28px] md:text-[40px] leading-[1.1] tracking-[-0.025em] font-medium max-w-[920px] mb-12 text-balance">
+              {e.title}
+            </h2>
           </FadeIn>
-          <FadeIn delay={0.15}>
-            <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6">
-              <div className="flex items-baseline gap-3 pb-5 border-b border-[var(--color-border-subtle)]">
-                <span className="font-mono text-[60px] leading-none tracking-[-0.04em] text-[var(--color-text-primary)] tabular-nums">
-                  <Counter to={t.expert.stat1.n} />
-                </span>
-                <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{t.expert.stat1.label}</span>
-              </div>
-              <div className="space-y-3 mt-5">
-                {t.expert.stats.map((s, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <span className="text-[13px] text-[var(--color-text-secondary)]">{s.k}</span>
-                    <span className="font-mono text-[14px] text-[var(--color-text-primary)] tabular-nums">{s.v}</span>
-                  </div>
+
+          <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-14 items-start">
+            <FadeIn>
+              <div className="space-y-5">
+                {e.bio.map((p, i) => (
+                  <p key={i} className="text-[15.5px] md:text-[16.5px] leading-[1.7] text-[var(--color-text-primary)]">
+                    {p}
+                  </p>
                 ))}
               </div>
-              <div className="mt-5 pt-5 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
-                {t.expert.skills.map((sk) => (
-                  <span key={sk} className="rounded border border-[var(--color-border-subtle)] bg-black/20 px-2 py-1 font-mono text-[10px] tracking-[0.08em] text-[var(--color-text-secondary)]">
+              <div className="mt-8 pt-8 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
+                {e.skills.map((sk) => (
+                  <span
+                    key={sk}
+                    className="rounded border border-[var(--color-border-subtle)] bg-black/20 px-2.5 py-1 font-mono text-[10.5px] tracking-[0.08em] text-[var(--color-text-secondary)]"
+                  >
                     {sk}
                   </span>
                 ))}
               </div>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6 lg:sticky lg:top-24">
+                <div className="flex items-baseline gap-3 pb-5 border-b border-[var(--color-border-subtle)]">
+                  <span className="font-mono text-[72px] leading-none tracking-[-0.04em] text-[var(--color-text-primary)] tabular-nums">
+                    <Counter to={e.card.years} />
+                  </span>
+                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{e.card.yearsLabel}</span>
+                </div>
+                <div className="mt-5 space-y-3.5">
+                  {e.card.rows.map((r, i) => (
+                    <div key={i} className="flex items-center justify-between gap-4">
+                      <span className="font-mono text-[10.5px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">{r.k}</span>
+                      <span className="font-mono text-[14px] text-[var(--color-text-primary)] tabular-nums text-right">{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 pt-5 border-t border-[var(--color-border-subtle)] flex items-center gap-2.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inset-0 rounded-full pulse-dot" style={{ background: "#14B8A6" }} />
+                  </span>
+                  <span className="font-mono text-[10.5px] tracking-[0.12em] uppercase text-[var(--color-accent-teal)]">
+                    {e.card.status}
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </Container>
+      </div>
+
+      <div className="border-t border-[var(--color-border-subtle)] bg-black/20 py-20 md:py-28">
+        <Container>
+          <FadeIn><SectionLabel>{e.boundaries.subLabel}</SectionLabel></FadeIn>
+          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 mt-6">
+            <FadeIn>
+              <h3 className="text-[24px] md:text-[30px] leading-[1.15] tracking-[-0.02em] font-medium text-balance">
+                {e.boundaries.title}
+              </h3>
+              <p className="mt-5 text-[14.5px] leading-relaxed text-[var(--color-text-secondary)]">
+                {e.boundaries.intro}
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <ul className="divide-y divide-[var(--color-border-subtle)] border-y border-[var(--color-border-subtle)]">
+                {e.boundaries.items.map((it, i) => (
+                  <li key={i} className="py-5 flex gap-5">
+                    <span className="font-mono text-[11px] tracking-[0.1em] text-[var(--color-text-mono)] tabular-nums pt-1 shrink-0 w-10">
+                      0{i + 1}
+                    </span>
+                    <div className="flex-1">
+                      <div className="flex items-start gap-3">
+                        <X size={15} strokeWidth={2} className="mt-1 shrink-0 text-[#E0B048]" />
+                        <h4 className="text-[15.5px] font-medium text-[var(--color-text-primary)] leading-snug">{it.t}</h4>
+                      </div>
+                      <p className="mt-2 pl-[26px] text-[14px] leading-relaxed text-[var(--color-text-secondary)]">{it.d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </FadeIn>
+          </div>
+
+          <FadeIn delay={0.15}>
+            <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+              <p className="text-[14.5px] md:text-[15px] leading-relaxed text-[var(--color-text-primary)] max-w-[680px]">
+                {e.boundaries.closing}
+              </p>
+              <button
+                onClick={openModal}
+                className="rounded-md border border-[var(--color-border-emphasis)] bg-white/5 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10 self-start md:self-auto whitespace-nowrap"
+              >
+                {e.boundaries.cta} →
+              </button>
             </div>
           </FadeIn>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }
