@@ -193,69 +193,127 @@ export function Problem() {
   );
 }
 
-export function Approach() {
+export function Approach({ openModal }: { openModal: () => void }) {
   const { t } = useI18n();
-  const [active, setActive] = useState<number | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [active, setActive] = useState(0);
+
+  const step = t.approach.steps[active];
 
   return (
     <section id="approach" className="py-24 md:py-32 border-t border-[var(--color-border-subtle)]">
       <Container>
         <FadeIn><SectionLabel>{t.approach.label}</SectionLabel></FadeIn>
         <FadeIn delay={0.05}>
-          <h2 className="text-[28px] md:text-[36px] leading-[1.15] tracking-[-0.025em] font-medium max-w-[720px] mb-12 text-balance">
+          <h2 className="text-[28px] md:text-[40px] leading-[1.1] tracking-[-0.025em] font-medium max-w-[880px] mb-4 text-balance">
             {t.approach.title}
           </h2>
+          <p className="text-[15px] md:text-[16px] text-[var(--color-text-secondary)] max-w-[760px] leading-relaxed mb-12">
+            {t.approach.sub}
+          </p>
         </FadeIn>
 
-        <div ref={ref} className="relative">
-          {/* Connector line */}
-          <svg className="hidden md:block absolute top-[28px] left-[8%] right-[8%] h-px pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1000 1">
-            <line
-              x1="0" y1="0.5" x2="1000" y2="0.5"
-              stroke="#6366F1" strokeWidth="1" strokeDasharray="1000"
-              strokeDashoffset={inView ? 0 : 1000}
-              style={{ transition: "stroke-dashoffset 1.2s ease-out 0.2s" }}
-            />
-          </svg>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {t.approach.steps.map((s, i) => (
-              <FadeIn key={i} delay={i * 0.12}>
-                <button
-                  onClick={() => setActive(active === i ? null : i)}
-                  className={`relative text-left w-full rounded-lg p-5 transition-colors border ${
-                    active === i ? "border-[var(--color-accent-indigo)] bg-[var(--color-accent-indigo-soft)]" : "border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] hover:border-[var(--color-border-emphasis)]"
-                  }`}
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border-emphasis)] bg-[var(--color-bg-base)] font-mono text-[14px] text-[var(--color-text-primary)] relative z-10">
-                      {s.n}
-                    </span>
-                    <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{s.week}</span>
-                  </div>
-                  <h3 className="text-[18px] font-medium mb-2 tracking-tight">{s.t}</h3>
-                  <p className="text-[14px] text-[var(--color-text-secondary)] leading-relaxed">{s.d}</p>
-                </button>
-              </FadeIn>
-            ))}
-          </div>
-
-          {active !== null && (
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
-              className="mt-6 rounded-lg border border-[var(--color-accent-indigo)]/30 bg-[var(--color-accent-indigo-soft)] p-5"
-            >
-              <p className="text-[14px] leading-relaxed text-[var(--color-text-primary)]">
-                <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-accent-indigo)] mr-3">
-                  DETAIL · 0{active + 1}
-                </span>
-                {t.approach.steps[active].detail}
-              </p>
-            </motion.div>
-          )}
+        {/* Week selector tabs */}
+        <div className="grid md:grid-cols-3 gap-3 mb-6">
+          {t.approach.steps.map((s, i) => (
+            <FadeIn key={i} delay={i * 0.08}>
+              <button
+                onClick={() => setActive(i)}
+                className={`relative w-full text-left rounded-lg border p-5 transition-colors ${
+                  active === i
+                    ? "border-[var(--color-accent-indigo)] bg-[var(--color-accent-indigo-soft)]"
+                    : "border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] hover:border-[var(--color-border-emphasis)]"
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="font-mono text-[20px] tracking-[-0.02em] text-[var(--color-text-primary)] tabular-nums">{s.n}</span>
+                  <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{s.week}</span>
+                </div>
+                <h3 className="text-[18px] font-medium mb-1 tracking-tight">{s.t}</h3>
+                <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">{s.d}</p>
+                <div className="mt-4 flex items-center gap-4 font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">
+                  <span>{t.approach.durationLabel} {s.duration}</span>
+                  <span className="h-3 w-px bg-[var(--color-border-emphasis)]" />
+                  <span className="truncate">{s.workType}</span>
+                </div>
+              </button>
+            </FadeIn>
+          ))}
         </div>
+
+        {/* Active week detail */}
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] overflow-hidden"
+        >
+          <div className="grid md:grid-cols-[1.4fr_1fr] divide-y md:divide-y-0 md:divide-x divide-[var(--color-border-subtle)]">
+            {/* Doing */}
+            <div className="p-6 md:p-8">
+              <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--color-accent-indigo)] mb-4">
+                {t.approach.doingLabel} · {step.week}
+              </div>
+              <div className="space-y-4">
+                {step.doing.split("\n\n").map((p, i) => (
+                  <p key={i} className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-text-primary)]">{p}</p>
+                ))}
+              </div>
+            </div>
+            {/* Artifacts + risk */}
+            <div className="p-6 md:p-8 bg-black/15">
+              <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--color-accent-teal)] mb-4">
+                {t.approach.artifactsLabel}
+              </div>
+              <ul className="space-y-2.5 mb-7">
+                {step.artifacts.map((a, i) => (
+                  <li key={i} className="flex gap-3 text-[13.5px] leading-snug text-[var(--color-text-primary)]">
+                    <span className="font-mono text-[10px] text-[var(--color-text-mono)] mt-1 tabular-nums">0{i + 1}</span>
+                    <span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-5 border-t border-[var(--color-border-subtle)]">
+                <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#E0B048] mb-3 flex items-center gap-2">
+                  <AlertTriangle size={12} strokeWidth={1.8} />
+                  {t.approach.riskLabel}
+                </div>
+                <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)]">{step.risk}</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Summary strip */}
+        <FadeIn delay={0.1}>
+          <div className="mt-10 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] p-5 md:p-6">
+            <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--color-text-mono)] mb-4">
+              {t.approach.summary.title}
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-4">
+              {t.approach.summary.items.map((s, i) => (
+                <div key={i} className="flex flex-col">
+                  <span className="font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">{s.k}</span>
+                  <span className="font-mono text-[20px] md:text-[22px] tracking-[-0.02em] text-[var(--color-text-primary)] tabular-nums mt-1">{s.v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+            <p className="text-[14px] md:text-[15px] leading-relaxed text-[var(--color-text-secondary)] max-w-[640px]">
+              {t.approach.summary.note}
+            </p>
+            <button
+              onClick={openModal}
+              className="rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85 self-start md:self-auto whitespace-nowrap"
+            >
+              {t.approach.summary.cta} →
+            </button>
+          </div>
+        </FadeIn>
       </Container>
     </section>
   );
@@ -344,47 +402,118 @@ function Counter({ to }: { to: number }) {
   return <span ref={ref} className="tabular-nums">{n}</span>;
 }
 
-export function Expert() {
+export function Expert({ openModal }: { openModal: () => void }) {
   const { t } = useI18n();
+  const e = t.expert;
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--color-border-subtle)]">
-      <Container>
-        <FadeIn><SectionLabel>{t.expert.label}</SectionLabel></FadeIn>
-        <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 mt-8">
-          <FadeIn>
-            <div className="space-y-4">
-              {t.expert.bio.map((p, i) => (
-                <p key={i} className="text-[16px] md:text-[17px] leading-[1.65] text-[var(--color-text-primary)]">{p}</p>
-              ))}
-            </div>
+    <section className="border-t border-[var(--color-border-subtle)]">
+      <div className="py-24 md:py-32">
+        <Container>
+          <FadeIn><SectionLabel>{e.label}</SectionLabel></FadeIn>
+          <FadeIn delay={0.05}>
+            <h2 className="text-[28px] md:text-[40px] leading-[1.1] tracking-[-0.025em] font-medium max-w-[920px] mb-12 text-balance">
+              {e.title}
+            </h2>
           </FadeIn>
-          <FadeIn delay={0.15}>
-            <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6">
-              <div className="flex items-baseline gap-3 pb-5 border-b border-[var(--color-border-subtle)]">
-                <span className="font-mono text-[60px] leading-none tracking-[-0.04em] text-[var(--color-text-primary)] tabular-nums">
-                  <Counter to={t.expert.stat1.n} />
-                </span>
-                <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{t.expert.stat1.label}</span>
-              </div>
-              <div className="space-y-3 mt-5">
-                {t.expert.stats.map((s, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <span className="text-[13px] text-[var(--color-text-secondary)]">{s.k}</span>
-                    <span className="font-mono text-[14px] text-[var(--color-text-primary)] tabular-nums">{s.v}</span>
-                  </div>
+
+          <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-14 items-start">
+            <FadeIn>
+              <div className="space-y-5">
+                {e.bio.map((p, i) => (
+                  <p key={i} className="text-[15.5px] md:text-[16.5px] leading-[1.7] text-[var(--color-text-primary)]">
+                    {p}
+                  </p>
                 ))}
               </div>
-              <div className="mt-5 pt-5 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
-                {t.expert.skills.map((sk) => (
-                  <span key={sk} className="rounded border border-[var(--color-border-subtle)] bg-black/20 px-2 py-1 font-mono text-[10px] tracking-[0.08em] text-[var(--color-text-secondary)]">
+              <div className="mt-8 pt-8 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
+                {e.skills.map((sk) => (
+                  <span
+                    key={sk}
+                    className="rounded border border-[var(--color-border-subtle)] bg-black/20 px-2.5 py-1 font-mono text-[10.5px] tracking-[0.08em] text-[var(--color-text-secondary)]"
+                  >
                     {sk}
                   </span>
                 ))}
               </div>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6 lg:sticky lg:top-24">
+                <div className="flex items-baseline gap-3 pb-5 border-b border-[var(--color-border-subtle)]">
+                  <span className="font-mono text-[72px] leading-none tracking-[-0.04em] text-[var(--color-text-primary)] tabular-nums">
+                    <Counter to={e.card.years} />
+                  </span>
+                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">{e.card.yearsLabel}</span>
+                </div>
+                <div className="mt-5 space-y-3.5">
+                  {e.card.rows.map((r, i) => (
+                    <div key={i} className="flex items-center justify-between gap-4">
+                      <span className="font-mono text-[10.5px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">{r.k}</span>
+                      <span className="font-mono text-[14px] text-[var(--color-text-primary)] tabular-nums text-right">{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 pt-5 border-t border-[var(--color-border-subtle)] flex items-center gap-2.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inset-0 rounded-full pulse-dot" style={{ background: "#14B8A6" }} />
+                  </span>
+                  <span className="font-mono text-[10.5px] tracking-[0.12em] uppercase text-[var(--color-accent-teal)]">
+                    {e.card.status}
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </Container>
+      </div>
+
+      <div className="border-t border-[var(--color-border-subtle)] bg-black/20 py-20 md:py-28">
+        <Container>
+          <FadeIn><SectionLabel>{e.boundaries.subLabel}</SectionLabel></FadeIn>
+          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 mt-6">
+            <FadeIn>
+              <h3 className="text-[24px] md:text-[30px] leading-[1.15] tracking-[-0.02em] font-medium text-balance">
+                {e.boundaries.title}
+              </h3>
+              <p className="mt-5 text-[14.5px] leading-relaxed text-[var(--color-text-secondary)]">
+                {e.boundaries.intro}
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <ul className="divide-y divide-[var(--color-border-subtle)] border-y border-[var(--color-border-subtle)]">
+                {e.boundaries.items.map((it, i) => (
+                  <li key={i} className="py-5 flex gap-5">
+                    <span className="font-mono text-[11px] tracking-[0.1em] text-[var(--color-text-mono)] tabular-nums pt-1 shrink-0 w-10">
+                      0{i + 1}
+                    </span>
+                    <div className="flex-1">
+                      <div className="flex items-start gap-3">
+                        <X size={15} strokeWidth={2} className="mt-1 shrink-0 text-[#E0B048]" />
+                        <h4 className="text-[15.5px] font-medium text-[var(--color-text-primary)] leading-snug">{it.t}</h4>
+                      </div>
+                      <p className="mt-2 pl-[26px] text-[14px] leading-relaxed text-[var(--color-text-secondary)]">{it.d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </FadeIn>
+          </div>
+
+          <FadeIn delay={0.15}>
+            <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+              <p className="text-[14.5px] md:text-[15px] leading-relaxed text-[var(--color-text-primary)] max-w-[680px]">
+                {e.boundaries.closing}
+              </p>
+              <button
+                onClick={openModal}
+                className="rounded-md border border-[var(--color-border-emphasis)] bg-white/5 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10 self-start md:self-auto whitespace-nowrap"
+              >
+                {e.boundaries.cta} →
+              </button>
             </div>
           </FadeIn>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }
