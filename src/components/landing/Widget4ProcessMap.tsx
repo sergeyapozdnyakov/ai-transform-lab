@@ -147,7 +147,6 @@ export function Widget4ProcessMap() {
                   stroke={show ? "#14B8A6" : "#EF4444"}
                   strokeWidth={1.3}
                   opacity={0.75}
-                  className={!show ? "pulse-ring" : ""}
                 />
               )}
               <circle cx={n.x} cy={n.y} r={14} fill="#0F1422" stroke="rgba(255,255,255,0.22)" strokeWidth={1} />
