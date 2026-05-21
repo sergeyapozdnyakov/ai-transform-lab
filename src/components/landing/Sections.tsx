@@ -503,7 +503,17 @@ export function Deliverable() {
 
 export function FAQ() {
   const { t } = useI18n();
-  const [open, setOpen] = useState<number | null>(0);
+  // Default open: Q.01 (group 0, item 0) and Q.10 (group 2, item 1)
+  const [open, setOpen] = useState<Record<string, boolean>>({ "0-0": true, "2-1": true });
+  const toggle = (key: string) => setOpen((s) => ({ ...s, [key]: !s[key] }));
+
+  // Compute global Q numbers across groups
+  let globalIdx = 0;
+  const groups = t.faq.groups.map((g) => ({
+    ...g,
+    items: g.items.map((it) => ({ ...it, n: ++globalIdx })),
+  }));
+
   return (
     <section id="faq" className="py-24 md:py-32 border-t border-[var(--color-border-subtle)]">
       <Container>
@@ -514,34 +524,65 @@ export function FAQ() {
               FAQ
             </h2>
           </FadeIn>
-          <div className="space-y-1">
-            {t.faq.items.map((q, i) => {
-              const isOpen = open === i;
-              return (
-                <FadeIn key={i} delay={i * 0.04}>
-                  <div className={`border-l-2 transition-colors ${isOpen ? "border-[var(--color-accent-indigo)]" : "border-transparent"}`}>
-                    <button
-                      onClick={() => setOpen(isOpen ? null : i)}
-                      className="w-full flex items-center justify-between gap-4 py-4 pl-5 pr-2 text-left hover:text-white transition-colors"
-                    >
-                      <span className="flex items-center gap-4">
-                        <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)] tabular-nums">
-                          Q.0{i + 1}
-                        </span>
-                        <span className="text-[15px] text-[var(--color-text-primary)]">{q.q}</span>
-                      </span>
-                      <ChevronDown size={16} strokeWidth={1.5} className="shrink-0 text-[var(--color-text-mono)] transition-transform" style={{ transform: isOpen ? "rotate(180deg)" : "none" }} />
-                    </button>
-                    {isOpen && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} transition={{ duration: 0.3 }}>
-                        <p className="pl-[68px] pr-6 pb-5 text-[14px] leading-relaxed text-[var(--color-text-secondary)]">{q.a}</p>
-                      </motion.div>
-                    )}
-                    <div className="border-b border-[var(--color-border-subtle)]" />
+          <div className="space-y-10">
+            {groups.map((group, gi) => (
+              <FadeIn key={gi} delay={gi * 0.05}>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--color-text-mono)]">
+                      {String(gi + 1).padStart(2, "0")} · {group.title}
+                    </span>
+                    <span className="h-px flex-1 bg-[var(--color-border-subtle)]" />
                   </div>
-                </FadeIn>
-              );
-            })}
+                  <div className="space-y-1">
+                    {group.items.map((q, ii) => {
+                      const key = `${gi}-${ii}`;
+                      const isOpen = !!open[key];
+                      return (
+                        <div key={key} className={`border-l-2 transition-colors ${isOpen ? "border-[var(--color-accent-indigo)]" : "border-transparent"}`}>
+                          <button
+                            onClick={() => toggle(key)}
+                            className="w-full flex items-start justify-between gap-4 py-4 pl-5 pr-2 text-left hover:text-white transition-colors"
+                          >
+                            <span className="flex items-start gap-4">
+                              <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)] tabular-nums mt-1 shrink-0">
+                                Q.{String(q.n).padStart(2, "0")}
+                              </span>
+                              <span className="text-[15px] text-[var(--color-text-primary)]">{q.q}</span>
+                            </span>
+                            <ChevronDown size={16} strokeWidth={1.5} className="shrink-0 mt-1 text-[var(--color-text-mono)] transition-transform" style={{ transform: isOpen ? "rotate(180deg)" : "none" }} />
+                          </button>
+                          {isOpen && (
+                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} transition={{ duration: 0.3 }}>
+                              <div className="pl-[72px] pr-6 pb-5 space-y-3 text-[14px] leading-relaxed text-[var(--color-text-secondary)]">
+                                {q.a.split("\n\n").map((p, pi) => <p key={pi}>{p}</p>)}
+                              </div>
+                            </motion.div>
+                          )}
+                          <div className="border-b border-[var(--color-border-subtle)]" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+
+            <FadeIn delay={0.1}>
+              <div className="mt-4 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)]/40 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <p className="text-[13px] text-[var(--color-text-secondary)] max-w-xl">
+                  {t.faq.notFoundText}
+                </p>
+                <a
+                  href={t.faq.telegramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 inline-flex items-center gap-2 rounded-md border border-[var(--color-border-emphasis)] bg-black/30 px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-primary)] hover:bg-black/50 transition-colors"
+                >
+                  {t.faq.notFoundCta} →
+                </a>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </Container>
