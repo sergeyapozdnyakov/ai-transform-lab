@@ -511,10 +511,10 @@ const dict = {
       yesTitle: "Good fit if…",
       noTitle: "Not a fit if…",
       yes: [
-        "Company of 50–500 people, with data and SOPs",
+        "Brand or manufacturer in beauty / FMCG / retail, 30–500 people",
         "Goal is ROI, not «trying out AI»",
-        "Ready to spend 2–3 hours/week on interviews",
-        "Decision-maker: CEO / COO / CIO",
+        "You have an assortment, sales on marketplaces or in retail, data and SOPs",
+        "Decision-maker: founder / CEO / commercial director",
       ],
       no: [
         "You want a «magic chatbot in a week»",
