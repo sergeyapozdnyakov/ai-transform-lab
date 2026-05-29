@@ -308,7 +308,7 @@ const dict = {
       label: "07 / ВОПРОСЫ",
       notFoundText: "Не нашли ответ? Напишите в Telegram — отвечу лично в течение нескольких часов.",
       notFoundCta: "Открыть Telegram",
-      telegramUrl: "https://t.me/",
+      telegramUrl: "https://t.me/REPLACE_WITH_REAL_HANDLE",
       groups: [
         {
           title: "Деньги и условия",
