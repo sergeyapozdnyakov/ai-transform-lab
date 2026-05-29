@@ -670,7 +670,7 @@ const dict = {
       label: "07 / FAQ",
       notFoundText: "Didn't find an answer? Message me on Telegram — I reply personally within a few hours.",
       notFoundCta: "Open Telegram",
-      telegramUrl: "https://t.me/",
+      telegramUrl: "https://t.me/REPLACE_WITH_REAL_HANDLE",
       groups: [
         {
           title: "Pricing & terms",
