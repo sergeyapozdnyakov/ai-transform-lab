@@ -711,7 +711,7 @@ const dict = {
     footer: {
       cols: [
         { t: "Services", links: ["AI audit", "Roadmap", "Fractional CIO"] },
-        { t: "Contact", links: ["hello@aiaudit.ru", "Telegram", "LinkedIn"] },
+        { t: "Contact", links: ["REPLACE_WITH_REAL_EMAIL", "Telegram", "LinkedIn"] },
         { t: "Documents", links: ["NDA template", "Sample report", "Data policy"] },
       ],
       status: "v.1.0 · STATUS: ● ONLINE",
