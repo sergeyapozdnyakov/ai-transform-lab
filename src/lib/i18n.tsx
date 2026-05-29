@@ -349,7 +349,7 @@ const dict = {
     footer: {
       cols: [
         { t: "Услуги", links: ["AI-аудит", "Дорожная карта", "Fractional CIO"] },
-        { t: "Контакты", links: ["REPLACE_WITH_REAL_EMAIL", "REPLACE_ME", "REPLACE_ME"] },
+        { t: "Контакты", links: ["REPLACE_WITH_REAL_EMAIL", "Telegram", "LinkedIn"] },
         { t: "Документы", links: ["NDA шаблон", "Пример отчёта", "Политика данных"] },
       ],
       status: "v.1.0 · STATUS: ● ONLINE",
