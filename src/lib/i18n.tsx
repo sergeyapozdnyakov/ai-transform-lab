@@ -576,9 +576,9 @@ const dict = {
       label: "05 / CASES",
       title: "What changed for clients",
       items: [
-        { industry: "Manufacturing", metric: "−66%", unit: "cycle time", ctx: "Dealer requests: from 3.2 to 1.1 day. AI agent + 1C integration.", before: "3.2 d", after: "1.1 d" },
-        { industry: "Logistics", metric: "3× ↑", unit: "throughput", ctx: "Bill of lading parsing: 80 → 240 documents/hour per operator.", before: "80/h", after: "240/h" },
-        { industry: "B2B services", metric: "−40%", unit: "support cost", ctx: "RAG assistant closes 62% of tier-1 tickets without a human.", before: "€2.0/ticket", after: "€1.2/ticket" },
+        { industry: "Beauty brand", metric: "−73%", unit: "time per listing", ctx: "Listings for Wildberries, Ozon and Golden Apple: from 45 to 12 minutes. AI content generation + auto-SEO.", before: "45 min", after: "12 min" },
+        { industry: "FMCG / retail", metric: "−34%", unit: "dead stock", ctx: "Demand forecast across 2,400 SKUs and auto-recommendations for purchasing. Less overstock and fewer out-of-stocks.", before: "17% of stock", after: "11% of stock" },
+        { industry: "Cosmetics", metric: "−40%", unit: "support cost", ctx: "AI assistant closes ~60% of tickets (delivery, ingredients, skin-type matching) without an agent.", before: "€1.7/ticket", after: "€1.0/ticket" },
       ],
     },
     roi: {
