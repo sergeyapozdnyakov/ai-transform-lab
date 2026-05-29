@@ -582,7 +582,7 @@ const dict = {
       ],
     },
     roi: {
-      label: "AGGRESSIVE ESTIMATE",
+      label: "CONSERVATIVE ESTIMATE",
       title: "See how much manual work is costing you",
       sub: "Calculator based on medians from McKinsey, Deloitte and BCG research on AI deployments in mid-market. Precise number — after the audit.",
       teamSize: "Employees in office roles",
