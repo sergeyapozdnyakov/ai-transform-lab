@@ -525,14 +525,14 @@ const dict = {
     },
     expert: {
       label: "04 / EXPERT",
-      title: "25 years in IT. From engineer to CIO and back — now independent.",
+      title: "25 years in IT. From engineer to CIO inside global consumer brands.",
       bio: [
-        "I started writing code in the late 90s, when «web development» meant cutting layouts for IE5 and Netscape. Over 25 years I went from junior engineer to IT director in several companies of different sizes — from an 8-person startup to a holding with 1,200+ employees. I've watched the cycles: the collapse of mainframes, the web revolution, the mobile wave, cloud, big data, and now AI.",
+        "I started writing code in the late 90s. Over 25 years I went from junior engineer to IT director — including roles at Estée Lauder and Panasonic, companies where standards for working with data, assortment and the consumer are set at a global level. I've watched the cycles: the web revolution, the mobile wave, cloud, big data — and now AI.",
         "That means three things. First — I have intuition for what will stick and what will look like hype 18 months from now. I've already watched NoSQL evangelism, blockchain promises and no-code's «end of programming» die. AI is exactly the same: 90% of applications are overhyped, 10% genuinely change process economics. My job is to separate one from the other for your company.",
         "Second — I speak the language of both engineers and owners. Most IT consultants speak one or the other. As a result the owner doesn't understand what they're buying, and the engineers sabotage what got pushed on them from above. I've spent enough time on both sides to translate.",
         "Third — I still write code. Not at a junior level «keeping in shape», but well enough to build an AI prototype over a weekend and validate the idea before you spend a million on full-blown development. It changes the quality of recommendations significantly.",
         "In my last CIO years I spent 60% of my time on corporate politics, budgeting and meetings. Real work — architecture, technical decisions, AI strategy — kept shrinking. In 2025 I made the call to go independent, to do only the work that produces measurable client value.",
-        "Today I work with owners and CEOs of 50–500 person companies who understand AI is not a passing fad, and want to figure out how to apply it without burning millions on experiments. That's the spot where my 25 years of experience produce the biggest effect.",
+        "Today I work with founders and CEOs of beauty/FMCG brands that are growing fast but don't yet have the technological maturity of global companies. My job is to bring Estée Lauder and Panasonic standards to the people building the next big Russian brand — without the budgets and bureaucracy of a corporation.",
       ],
       card: {
         years: 25,
