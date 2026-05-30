@@ -9,9 +9,9 @@ const dict = {
     nav: { contact: "Связаться", links: ["Подход", "Кейсы", "Калькулятор", "FAQ"] },
     hero: {
       status: "ОТКРЫТ ДЛЯ ПРОЕКТОВ Q2 2026",
-      h1a: "Внедрение AI в beauty- и FMCG-бренды. Без хайпа.",
+      h1a: "Внедрение AI в растущий бизнес. Без хайпа.",
       h1b: "С измеримым ROI.",
-      sub: "Аудит ваших процессов и дорожная карта внедрения AI за 3 недели. От эксперта с 25-летним опытом, строившего технологии в Estée Lauder и Panasonic.",
+      sub: "Аудит процессов и дорожная карта внедрения AI за 3 недели. 25 лет в IT — от разработчика до CIO, строил технологии в Estée Lauder и Panasonic.",
       cta1: "Запросить аудит",
       cta2: "Посмотреть пример аудита",
       strip: ["25 ЛЕТ", "CIO", "3 НЕД"],
@@ -149,9 +149,9 @@ const dict = {
       yesTitle: "Подойдёт, если…",
       noTitle: "Не подойдёт, если…",
       yes: [
-        "Бренд или производитель в beauty / FMCG / ритейле, 30–500 человек",
+        "Растущая компания или бренд, 30–500 человек",
         "Цель — ROI, а не «попробовать AI»",
-        "Есть ассортимент, продажи на маркетплейсах или в рознице, данные и регламенты",
+        "Есть процессы и данные: продажи, поддержка, логистика, документооборот",
         "Решение принимает основатель / CEO / коммерческий директор",
       ],
       no: [
@@ -170,7 +170,7 @@ const dict = {
         "Второе — я говорю на языке и инженеров, и собственников. Большинство IT-консультантов умеют либо одно, либо другое. Из-за этого собственник не понимает, что покупает, а инженеры саботируют то, что им навязали сверху. Я провёл по обе стороны достаточно времени, чтобы переводить между ними.",
         "Третье — я сам пишу код. Не на уровне джуниора, который «поддерживает форму», а на уровне, достаточном, чтобы за выходные собрать AI-прототип и проверить идею до того, как вы потратите миллион на полноценную разработку. Это сильно меняет качество рекомендаций.",
         "В позиции CIO я последние годы тратил 60% времени на корпоративную политику, бюджетирование и совещания. Реальной работы — архитектуры, технических решений, AI-стратегии — оставалось всё меньше. В 2025 я сделал выбор: уйти в самостоятельный консалтинг, чтобы делать только то, что приносит измеримую пользу клиентам.",
-        "Сегодня я работаю с основателями и CEO beauty/FMCG-брендов, которые растут быстро, но ещё не имеют технологической зрелости глобальных компаний. Моя работа — принести стандарты Estée Lauder и Panasonic тем, кто строит следующий большой российский бренд, без бюджетов и бюрократии корпораций.",
+        "Сегодня я работаю с основателями и руководителями растущих компаний — особенно в потребительских брендах и ритейле, где у меня самый глубокий опыт. Но суть автоматизации универсальна: бухгалтерия, поддержка, логистика, документооборот устроены похоже в любом бизнесе, а отраслевая специфика лишь надстраивается сверху. Моя работа — принести стандарты Estée Lauder и Panasonic тем, кто строит следующую большую компанию, без бюджетов и бюрократии корпораций.",
       ],
       card: {
         years: 25,
@@ -214,9 +214,9 @@ const dict = {
       label: "05 / КЕЙСЫ",
       title: "Что менялось у клиентов",
       items: [
-        { industry: "Beauty-бренд", metric: "−73%", unit: "время на карточку", ctx: "Карточки для Wildberries, Ozon и Золотого Яблока: с 45 до 12 минут. AI-генерация контента + авто-SEO.", before: "45 мин", after: "12 мин" },
-        { industry: "FMCG / ритейл", metric: "−34%", unit: "неликвиды на складе", ctx: "Прогноз спроса по 2 400 SKU и авторекомендации по закупкам. Меньше излишков и out-of-stock.", before: "17% склада", after: "11% склада" },
-        { industry: "Косметика", metric: "−40%", unit: "стоимость поддержки", ctx: "AI-ассистент закрывает ~60% обращений (доставка, состав, подбор по типу кожи) без оператора.", before: "₽150/тикет", after: "₽90/тикет" },
+        { industry: "Потребительский бренд", metric: "−73%", unit: "время на карточку", ctx: "Карточки для маркетплейсов: с 45 до 12 минут. AI-генерация контента и авто-SEO.", before: "45 мин", after: "12 мин" },
+        { industry: "Клиентская поддержка", metric: "−40%", unit: "стоимость обращения", ctx: "AI-ассистент закрывает ~60% типовых обращений без оператора. Работает в любой отрасли.", before: "₽150/тикет", after: "₽90/тикет" },
+        { industry: "Финансы / документы", metric: "3× ↑", unit: "скорость обработки", ctx: "Извлечение данных из счетов, актов и КП: 80 → 240 документов в час на сотрудника.", before: "80/час", after: "240/час" },
       ],
     },
     roi: {
@@ -371,9 +371,9 @@ const dict = {
     nav: { contact: "Contact", links: ["Approach", "Cases", "Calculator", "FAQ"] },
     hero: {
       status: "OPEN FOR Q2 2026 PROJECTS",
-      h1a: "AI for beauty & FMCG brands. No hype.",
+      h1a: "AI for growing businesses. No hype.",
       h1b: "Measurable ROI.",
-      sub: "Audit of your processes and an AI implementation roadmap in 3 weeks. From a leader with 25 years building technology inside Estée Lauder and Panasonic.",
+      sub: "Process audit and AI implementation roadmap in 3 weeks. 25 years in IT — from engineer to CIO, built technology inside Estée Lauder and Panasonic.",
       cta1: "Request audit",
       cta2: "See sample deliverable",
       strip: ["25 YRS", "CIO", "3 WKS"],
@@ -511,9 +511,9 @@ const dict = {
       yesTitle: "Good fit if…",
       noTitle: "Not a fit if…",
       yes: [
-        "Brand or manufacturer in beauty / FMCG / retail, 30–500 people",
+        "Growing company or brand, 30–500 people",
         "Goal is ROI, not «trying out AI»",
-        "You have an assortment, sales on marketplaces or in retail, data and SOPs",
+        "You have processes and data: sales, support, logistics, document flow",
         "Decision-maker: founder / CEO / commercial director",
       ],
       no: [
@@ -532,7 +532,7 @@ const dict = {
         "Second — I speak the language of both engineers and owners. Most IT consultants speak one or the other. As a result the owner doesn't understand what they're buying, and the engineers sabotage what got pushed on them from above. I've spent enough time on both sides to translate.",
         "Third — I still write code. Not at a junior level «keeping in shape», but well enough to build an AI prototype over a weekend and validate the idea before you spend a million on full-blown development. It changes the quality of recommendations significantly.",
         "In my last CIO years I spent 60% of my time on corporate politics, budgeting and meetings. Real work — architecture, technical decisions, AI strategy — kept shrinking. In 2025 I made the call to go independent, to do only the work that produces measurable client value.",
-        "Today I work with founders and CEOs of beauty/FMCG brands that are growing fast but don't yet have the technological maturity of global companies. My job is to bring Estée Lauder and Panasonic standards to the people building the next big Russian brand — without the budgets and bureaucracy of a corporation.",
+        "Today I work with founders and leaders of growing companies — most deeply in consumer brands and retail, where my experience runs deepest. But the substance of automation is universal: accounting, support, logistics and document flow are wired similarly in any business, with industry specifics layered on top. My job is to bring Estée Lauder and Panasonic standards to the people building the next big company — without the budgets and bureaucracy of a corporation.",
       ],
       card: {
         years: 25,
@@ -576,9 +576,9 @@ const dict = {
       label: "05 / CASES",
       title: "What changed for clients",
       items: [
-        { industry: "Beauty brand", metric: "−73%", unit: "time per listing", ctx: "Listings for Wildberries, Ozon and Golden Apple: from 45 to 12 minutes. AI content generation + auto-SEO.", before: "45 min", after: "12 min" },
-        { industry: "FMCG / retail", metric: "−34%", unit: "dead stock", ctx: "Demand forecast across 2,400 SKUs and auto-recommendations for purchasing. Less overstock and fewer out-of-stocks.", before: "17% of stock", after: "11% of stock" },
-        { industry: "Cosmetics", metric: "−40%", unit: "support cost", ctx: "AI assistant closes ~60% of tickets (delivery, ingredients, skin-type matching) without an agent.", before: "€1.7/ticket", after: "€1.0/ticket" },
+        { industry: "Consumer brand", metric: "−73%", unit: "time per listing", ctx: "Marketplace listings: from 45 to 12 minutes. AI content generation and auto-SEO.", before: "45 min", after: "12 min" },
+        { industry: "Customer support", metric: "−40%", unit: "cost per ticket", ctx: "AI assistant closes ~60% of routine tickets without an agent. Works in any industry.", before: "€1.7/ticket", after: "€1.0/ticket" },
+        { industry: "Finance / documents", metric: "3× ↑", unit: "processing speed", ctx: "Extraction from invoices, acts and proposals: 80 → 240 documents per hour per employee.", before: "80/hr", after: "240/hr" },
       ],
     },
     roi: {
