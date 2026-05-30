@@ -576,9 +576,9 @@ const dict = {
       label: "05 / CASES",
       title: "What changed for clients",
       items: [
-        { industry: "Beauty brand", metric: "−73%", unit: "time per listing", ctx: "Listings for Wildberries, Ozon and Golden Apple: from 45 to 12 minutes. AI content generation + auto-SEO.", before: "45 min", after: "12 min" },
-        { industry: "FMCG / retail", metric: "−34%", unit: "dead stock", ctx: "Demand forecast across 2,400 SKUs and auto-recommendations for purchasing. Less overstock and fewer out-of-stocks.", before: "17% of stock", after: "11% of stock" },
-        { industry: "Cosmetics", metric: "−40%", unit: "support cost", ctx: "AI assistant closes ~60% of tickets (delivery, ingredients, skin-type matching) without an agent.", before: "€1.7/ticket", after: "€1.0/ticket" },
+        { industry: "Consumer brand", metric: "−73%", unit: "time per listing", ctx: "Marketplace listings: from 45 to 12 minutes. AI content generation and auto-SEO.", before: "45 min", after: "12 min" },
+        { industry: "Customer support", metric: "−40%", unit: "cost per ticket", ctx: "AI assistant closes ~60% of routine tickets without an agent. Works in any industry.", before: "€1.7/ticket", after: "€1.0/ticket" },
+        { industry: "Finance / documents", metric: "3× ↑", unit: "processing speed", ctx: "Extraction from invoices, acts and proposals: 80 → 240 documents per hour per employee.", before: "80/hr", after: "240/hr" },
       ],
     },
     roi: {
