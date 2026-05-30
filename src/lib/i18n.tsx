@@ -371,9 +371,9 @@ const dict = {
     nav: { contact: "Contact", links: ["Approach", "Cases", "Calculator", "FAQ"] },
     hero: {
       status: "OPEN FOR Q2 2026 PROJECTS",
-      h1a: "AI for beauty & FMCG brands. No hype.",
+      h1a: "AI for growing businesses. No hype.",
       h1b: "Measurable ROI.",
-      sub: "Audit of your processes and an AI implementation roadmap in 3 weeks. From a leader with 25 years building technology inside Estée Lauder and Panasonic.",
+      sub: "Process audit and AI implementation roadmap in 3 weeks. 25 years in IT — from engineer to CIO, built technology inside Estée Lauder and Panasonic.",
       cta1: "Request audit",
       cta2: "See sample deliverable",
       strip: ["25 YRS", "CIO", "3 WKS"],
