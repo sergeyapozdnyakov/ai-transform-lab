@@ -511,9 +511,9 @@ const dict = {
       yesTitle: "Good fit if…",
       noTitle: "Not a fit if…",
       yes: [
-        "Brand or manufacturer in beauty / FMCG / retail, 30–500 people",
+        "Growing company or brand, 30–500 people",
         "Goal is ROI, not «trying out AI»",
-        "You have an assortment, sales on marketplaces or in retail, data and SOPs",
+        "You have processes and data: sales, support, logistics, document flow",
         "Decision-maker: founder / CEO / commercial director",
       ],
       no: [
