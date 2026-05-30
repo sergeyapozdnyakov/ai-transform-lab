@@ -416,10 +416,10 @@ export function Expert({ openModal }: { openModal: () => void }) {
             </h2>
           </FadeIn>
 
-          <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-14 items-start">
+          <div className="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-14 items-start">
             <FadeIn>
-              <div className="grid md:grid-cols-[auto_1fr] gap-6 md:gap-8 items-start">
-                <div className="mx-auto md:mx-0 w-[220px] md:w-[300px] shrink-0">
+              <div>
+                <figure className="float-none md:float-left md:mr-7 md:mb-3 mx-auto md:mx-0 w-[200px] md:w-[240px] mb-5">
                   <div className="relative rounded-xl overflow-hidden border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] aspect-square">
                     <img
                       src="/expert-photo.jpg"
@@ -430,14 +430,15 @@ export function Expert({ openModal }: { openModal: () => void }) {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                </div>
-                <div className="space-y-5">
+                </figure>
+                <div className="space-y-4">
                   {e.bio.map((p, i) => (
-                    <p key={i} className="text-[15.5px] md:text-[16.5px] leading-[1.7] text-[var(--color-text-primary)]">
+                    <p key={i} className="text-[15px] md:text-[15.5px] leading-[1.65] text-[var(--color-text-primary)]">
                       {p}
                     </p>
                   ))}
                 </div>
+                <div className="clear-both" />
               </div>
               <div className="mt-8 pt-8 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
                 {e.skills.map((sk) => (
@@ -450,6 +451,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
                 ))}
               </div>
             </FadeIn>
+
 
             <FadeIn delay={0.15}>
               <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6 lg:sticky lg:top-24">
