@@ -418,12 +418,26 @@ export function Expert({ openModal }: { openModal: () => void }) {
 
           <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-14 items-start">
             <FadeIn>
-              <div className="space-y-5">
-                {e.bio.map((p, i) => (
-                  <p key={i} className="text-[15.5px] md:text-[16.5px] leading-[1.7] text-[var(--color-text-primary)]">
-                    {p}
-                  </p>
-                ))}
+              <div className="grid md:grid-cols-[auto_1fr] gap-6 md:gap-8 items-start">
+                <div className="mx-auto md:mx-0 w-[220px] md:w-[300px] shrink-0">
+                  <div className="relative rounded-xl overflow-hidden border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] aspect-square">
+                    <img
+                      src="/expert-photo.jpg"
+                      alt="Сергей Поздняков — AI-консультант"
+                      width={768}
+                      height={768}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-5">
+                  {e.bio.map((p, i) => (
+                    <p key={i} className="text-[15.5px] md:text-[16.5px] leading-[1.7] text-[var(--color-text-primary)]">
+                      {p}
+                    </p>
+                  ))}
+                </div>
               </div>
               <div className="mt-8 pt-8 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-1.5">
                 {e.skills.map((sk) => (
