@@ -576,9 +576,9 @@ const dict = {
       label: "05 / CASES",
       title: "What changed for clients",
       items: [
-        { industry: "Consumer brand", metric: "−73%", unit: "time per listing", ctx: "Marketplace listings: from 45 to 12 minutes. AI content generation and auto-SEO.", before: "45 min", after: "12 min" },
-        { industry: "Customer support", metric: "−40%", unit: "cost per ticket", ctx: "AI assistant closes ~60% of routine tickets without an agent. Works in any industry.", before: "€1.7/ticket", after: "€1.0/ticket" },
-        { industry: "Finance / documents", metric: "3× ↑", unit: "processing speed", ctx: "Extraction from invoices, acts and proposals: 80 → 240 documents per hour per employee.", before: "80/hr", after: "240/hr" },
+        { industry: "Beauty retail", metric: "60%", unit: "of tickets closed by the bot", ctx: "AI support assistant for chain consultants: products, stock, procedures — no escalation to back office. A real project at Estée Lauder.", before: "6 min/reply", after: "30 sec/reply" },
+        { industry: "Finance / back office", metric: "−70%", unit: "time on routine work", ctx: "RPA Center of Excellence on UIPath and Power Automate: bots close repetitive operations in finance and reporting. CoE build-out experience at Estée Lauder. Works in any industry.", before: "8 h/day", after: "2.4 h/day" },
+        { industry: "Warehouse / logistics", metric: "−58%", unit: "picking errors", ctx: "WMS: addressable storage, batch and shelf-life tracking, picking station with barcode verification. Rolled out across 6 warehouses at Zielinski & Rozen.", before: "4.1%", after: "1.7%" },
       ],
     },
     roi: {
