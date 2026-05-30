@@ -532,7 +532,7 @@ const dict = {
         "Second — I speak the language of both engineers and owners. Most IT consultants speak one or the other. As a result the owner doesn't understand what they're buying, and the engineers sabotage what got pushed on them from above. I've spent enough time on both sides to translate.",
         "Third — I still write code. Not at a junior level «keeping in shape», but well enough to build an AI prototype over a weekend and validate the idea before you spend a million on full-blown development. It changes the quality of recommendations significantly.",
         "In my last CIO years I spent 60% of my time on corporate politics, budgeting and meetings. Real work — architecture, technical decisions, AI strategy — kept shrinking. In 2025 I made the call to go independent, to do only the work that produces measurable client value.",
-        "Today I work with founders and CEOs of beauty/FMCG brands that are growing fast but don't yet have the technological maturity of global companies. My job is to bring Estée Lauder and Panasonic standards to the people building the next big Russian brand — without the budgets and bureaucracy of a corporation.",
+        "Today I work with founders and leaders of growing companies — most deeply in consumer brands and retail, where my experience runs deepest. But the substance of automation is universal: accounting, support, logistics and document flow are wired similarly in any business, with industry specifics layered on top. My job is to bring Estée Lauder and Panasonic standards to the people building the next big company — without the budgets and bureaucracy of a corporation.",
       ],
       card: {
         years: 25,
