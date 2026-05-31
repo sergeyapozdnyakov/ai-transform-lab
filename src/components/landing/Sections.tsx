@@ -30,7 +30,7 @@ export function Nav({ openModal }: { openModal: () => void }) {
         </a>
         <div className="hidden md:flex items-center gap-7">
           {t.nav.links.map((l, i) => (
-            <a key={i} href={["#approach", "#cases", "#roi", "#faq"][i]} className="text-[13px] text-[var(--color-text-secondary)] hover:text-white transition-colors">
+            <a key={i} href={["#approach", "#cases", "#roi", "#faq"][i]} className="text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-strong)] transition-colors">
               {l}
             </a>
           ))}
@@ -41,7 +41,7 @@ export function Nav({ openModal }: { openModal: () => void }) {
             <span className="text-[var(--color-text-mono)]">|</span>
             <button onClick={() => setLang("en")} className={`px-1.5 py-1 transition-colors ${lang === "en" ? "text-white" : "text-[var(--color-text-mono)]"}`}>EN</button>
           </div>
-          <button onClick={openModal} className="rounded-md border border-[var(--color-border-emphasis)] bg-white/5 px-3.5 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-white/10">
+          <button onClick={openModal} className="rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-surface-soft)] px-3.5 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[var(--color-surface-soft-hover)]">
             {t.nav.contact}
           </button>
         </div>
@@ -125,10 +125,10 @@ export function Hero({ openModal }: { openModal: () => void }) {
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.6 }}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
-              <button onClick={openModal} className="rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85">
+              <button onClick={openModal} className="rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-all hover:bg-[var(--color-btn-primary-hover)]">
                 {t.hero.cta1} →
               </button>
-              <a href="#deliverable" className="rounded-md border border-[var(--color-border-emphasis)] bg-transparent px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/5">
+              <a href="#deliverable" className="rounded-md border border-[var(--color-border-emphasis)] bg-transparent px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[var(--color-surface-soft-hover)]">
                 {t.hero.cta2}
               </a>
             </motion.div>
@@ -308,7 +308,7 @@ export function Approach({ openModal }: { openModal: () => void }) {
             </p>
             <button
               onClick={openModal}
-              className="rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85 self-start md:self-auto whitespace-nowrap"
+              className="rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-all hover:bg-[var(--color-btn-primary-hover)] self-start md:self-auto whitespace-nowrap"
             >
               {t.approach.summary.cta} →
             </button>
@@ -522,7 +522,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
               </p>
               <button
                 onClick={openModal}
-                className="rounded-md border border-[var(--color-border-emphasis)] bg-white/5 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10 self-start md:self-auto whitespace-nowrap"
+                className="rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-surface-soft)] px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[var(--color-surface-soft-hover)] self-start md:self-auto whitespace-nowrap"
               >
                 {e.boundaries.cta} →
               </button>
@@ -687,7 +687,7 @@ export function FAQ() {
                         <div key={key} className={`border-l-2 transition-colors ${isOpen ? "border-[var(--color-accent-indigo)]" : "border-transparent"}`}>
                           <button
                             onClick={() => toggle(key)}
-                            className="w-full flex items-start justify-between gap-4 py-4 pl-5 pr-2 text-left hover:text-white transition-colors"
+                            className="w-full flex items-start justify-between gap-4 py-4 pl-5 pr-2 text-left hover:text-[var(--color-text-strong)] transition-colors"
                           >
                             <span className="flex items-start gap-4">
                               <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)] tabular-nums mt-1 shrink-0">
@@ -722,7 +722,7 @@ export function FAQ() {
                   href={t.faq.telegramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 inline-flex items-center gap-2 rounded-md border border-[var(--color-border-emphasis)] bg-black/30 px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-primary)] hover:bg-black/50 transition-colors"
+                  className="shrink-0 inline-flex items-center gap-2 rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-input-bg)] px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-input-bg-hover)] transition-colors"
                 >
                   {t.faq.notFoundCta} →
                 </a>
@@ -749,10 +749,10 @@ export function FinalCTA({ openModal }: { openModal: () => void }) {
             {t.finalCta.sub}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <button onClick={openModal} className="rounded-md bg-white px-6 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85">
+            <button onClick={openModal} className="rounded-md bg-[var(--color-btn-primary)] px-6 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-all hover:bg-[var(--color-btn-primary-hover)]">
               {t.finalCta.btn1} →
             </button>
-            <a href="https://t.me" target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-md border border-[var(--color-border-emphasis)] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/5">
+            <a href="https://t.me" target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-md border border-[var(--color-border-emphasis)] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[var(--color-surface-soft-hover)]">
               <Send size={14} strokeWidth={1.5} /> {t.finalCta.btn2}
             </a>
           </div>
@@ -787,7 +787,7 @@ export function Footer() {
                 <ul className="space-y-2">
                   {col.links.map((l) => (
                     <li key={l}>
-                      <a href="#" className="text-[13px] text-[var(--color-text-secondary)] hover:text-white transition-colors">{l}</a>
+                      <a href="#" className="text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-strong)] transition-colors">{l}</a>
                     </li>
                   ))}
                 </ul>

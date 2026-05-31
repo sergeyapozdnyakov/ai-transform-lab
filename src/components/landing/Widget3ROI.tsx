@@ -46,7 +46,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
                 <span className="text-[var(--color-accent-amber)]">{t.roi.currentBar}</span>
                 <span className="text-[var(--color-text-mono)] tabular-nums">100%</span>
               </div>
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
+              <div className="h-3 rounded-sm bg-[var(--color-input-bg)] overflow-hidden border border-[var(--color-border-subtle)]">
                 <div className="h-full bg-[var(--color-accent-amber)]/80" style={{ width: "100%" }} />
               </div>
             </div>
@@ -63,7 +63,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
                 <span className="text-[var(--color-accent-teal)]">{t.roi.afterBar}</span>
                 <span className="text-[var(--color-text-mono)] tabular-nums">{calc.afterPct}%</span>
               </div>
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
+              <div className="h-3 rounded-sm bg-[var(--color-input-bg)] overflow-hidden border border-[var(--color-border-subtle)]">
                 <div
                   className="h-full bg-[var(--color-accent-teal)] transition-all duration-500"
                   style={{ width: `${calc.afterPct}%` }}
@@ -113,7 +113,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
 
           <button
             onClick={onCta}
-            className="w-full mt-2 rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85"
+            className="w-full mt-2 rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-all hover:bg-[var(--color-btn-primary-hover)]"
           >
             {t.roi.cta} →
           </button>

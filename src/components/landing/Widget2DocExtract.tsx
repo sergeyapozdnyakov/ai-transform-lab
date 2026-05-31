@@ -30,7 +30,7 @@ export function Widget2DocExtract() {
             key={i}
             onClick={() => setStage(i)}
             className={`px-4 py-2 rounded text-[12px] font-mono uppercase tracking-[0.08em] transition-colors ${
-              stage === i ? "bg-[var(--color-accent-indigo)] text-white" : "text-[var(--color-text-secondary)] hover:text-white"
+              stage === i ? "bg-[var(--color-accent-indigo)] text-white" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-strong)]"
             }`}
           >
             <span className="opacity-60 mr-2">0{i + 1}</span>
@@ -41,8 +41,8 @@ export function Widget2DocExtract() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Document side */}
-        <div className="relative rounded-lg border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-black/30">
+        <div className="relative rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-[var(--color-input-bg)]">
             <div className="flex items-center gap-2 text-[12px] text-[var(--color-text-secondary)]">
               <FileText size={14} strokeWidth={1.5} className="text-[var(--color-accent-indigo)]" />
               <span className="font-mono text-[11px]">КП-2026-318.pdf</span>
@@ -137,8 +137,8 @@ i.ivanov@tehmontaj.ru`}
         </div>
 
         {/* Result side */}
-        <div className="rounded-lg border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-black/30">
+        <div className="rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-[var(--color-input-bg)]">
             <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">structured.json</span>
             <span className="font-mono text-[10px]" style={{ color: statusColor }}>{statusText}</span>
           </div>
