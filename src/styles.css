@@ -69,8 +69,8 @@
 
 /* Light theme overrides — clean, premium, high contrast */
 [data-theme="light"] {
-  --color-bg-base: #ece9e1;
-  --color-bg-elevated: #ffffff;
+  --color-bg-base: #e8e4d7;
+  --color-bg-elevated: #f3efe5;
   --color-bg-card: #ffffff;
   --color-border-subtle: rgba(10, 14, 26, 0.10);
   --color-border-emphasis: rgba(10, 14, 26, 0.22);
