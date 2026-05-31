@@ -286,7 +286,7 @@ export function Approach({ openModal }: { openModal: () => void }) {
               </div>
             </div>
             {/* Artifacts + risk */}
-            <div className="p-6 md:p-8 bg-black/15">
+            <div className="p-6 md:p-8 bg-[var(--color-surface-sunken-soft)]">
               <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--color-accent-teal)] mb-4">
                 {t.approach.artifactsLabel}
               </div>
@@ -469,7 +469,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
                 {e.skills.map((sk) => (
                   <span
                     key={sk}
-                    className="rounded border border-[var(--color-border-subtle)] bg-black/20 px-2.5 py-1 font-mono text-[10.5px] tracking-[0.08em] text-[var(--color-text-secondary)]"
+                    className="rounded border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-2.5 py-1 font-mono text-[10.5px] tracking-[0.08em] text-[var(--color-text-secondary)]"
                   >
                     {sk}
                   </span>
@@ -508,7 +508,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
         </Container>
       </div>
 
-      <div className="border-t border-[var(--color-border-subtle)] bg-black/20 py-20 md:py-28">
+      <div className="border-t border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] py-20 md:py-28">
         <Container>
           <FadeIn><SectionLabel>{e.boundaries.subLabel}</SectionLabel></FadeIn>
           <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 mt-6">
@@ -579,7 +579,7 @@ export function Cases() {
                 className="text-left w-full h-full rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] p-6 transition-all hover:border-[var(--color-border-emphasis)]"
               >
                 <div className="flex items-center justify-between mb-6">
-                  <span className="rounded-full border border-[var(--color-border-subtle)] bg-black/20 px-2.5 py-1 font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-secondary)]">
+                  <span className="rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-2.5 py-1 font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-secondary)]">
                     {c.industry}
                   </span>
                   <span className="font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">

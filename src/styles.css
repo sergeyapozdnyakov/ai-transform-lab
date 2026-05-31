@@ -30,6 +30,14 @@
   --color-surface-soft-hover: rgba(255, 255, 255, 0.10);
   --color-input-bg: rgba(0, 0, 0, 0.30);
   --color-input-bg-hover: rgba(0, 0, 0, 0.50);
+  --color-surface-sunken: rgba(0, 0, 0, 0.20);
+  --color-surface-sunken-soft: rgba(0, 0, 0, 0.15);
+  --color-tooltip-bg: rgba(0, 0, 0, 0.85);
+  --color-viz-line: rgba(255, 255, 255, 0.15);
+  --color-viz-line-soft: rgba(255, 255, 255, 0.08);
+  --color-viz-line-strong: rgba(255, 255, 255, 0.22);
+  --color-viz-fill: rgba(255, 255, 255, 0.06);
+  --color-viz-node: #0f1422;
   --color-grid-line: rgba(255, 255, 255, 0.025);
 
   --color-background: var(--color-bg-base);
@@ -59,29 +67,60 @@
   --radius-xl: 0.75rem;
 }
 
-/* Light theme overrides */
+/* Light theme overrides — clean, premium, high contrast */
 [data-theme="light"] {
-  --color-bg-base: #f7f7f5;
-  --color-bg-elevated: #ffffff;
-  --color-bg-card: rgba(0, 0, 0, 0.02);
-  --color-border-subtle: rgba(0, 0, 0, 0.08);
-  --color-border-emphasis: rgba(0, 0, 0, 0.16);
+  --color-bg-base: #e8e4d7;
+  --color-bg-elevated: #f3efe5;
+  --color-bg-card: #ffffff;
+  --color-border-subtle: rgba(10, 14, 26, 0.10);
+  --color-border-emphasis: rgba(10, 14, 26, 0.22);
   --color-text-primary: #0a0e1a;
-  --color-text-secondary: #4b5563;
-  --color-text-mono: #6b7280;
+  --color-text-secondary: #475569;
+  --color-text-mono: #64748b;
   --color-text-strong: #0a0e1a;
   --color-accent-indigo: #4f46e5;
-  --color-accent-indigo-soft: rgba(79, 70, 229, 0.08);
+  --color-accent-indigo-soft: rgba(79, 70, 229, 0.10);
 
   --color-btn-primary: #0a0e1a;
   --color-btn-primary-fg: #ffffff;
   --color-btn-primary-hover: #1f2937;
-  --color-surface-soft: rgba(0, 0, 0, 0.04);
-  --color-surface-soft-hover: rgba(0, 0, 0, 0.08);
-  --color-input-bg: rgba(0, 0, 0, 0.04);
-  --color-input-bg-hover: rgba(0, 0, 0, 0.08);
-  --color-grid-line: rgba(0, 0, 0, 0.04);
+  --color-surface-soft: #ffffff;
+  --color-surface-soft-hover: #f1f0ea;
+  --color-input-bg: #ffffff;
+  --color-input-bg-hover: #f1f0ea;
+  --color-grid-line: rgba(10, 14, 26, 0.05);
+
+  --color-surface-sunken: #ffffff;
+  --color-surface-sunken-soft: #faf9f4;
+  --color-tooltip-bg: rgba(10, 14, 26, 0.92);
+  --color-viz-line: rgba(10, 14, 26, 0.18);
+  --color-viz-line-soft: rgba(10, 14, 26, 0.08);
+  --color-viz-line-strong: rgba(10, 14, 26, 0.28);
+  --color-viz-fill: rgba(10, 14, 26, 0.04);
+  --color-viz-node: #ffffff;
 }
+
+[data-theme="light"] ::selection {
+  background: rgba(79, 70, 229, 0.20);
+  color: #0a0e1a;
+}
+
+/* Cards/surfaces lift cleanly on the light base */
+[data-theme="light"] .grid-bg {
+  background-image:
+    linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+}
+
+[data-theme="light"] input[type="range"].techno {
+  background: rgba(10, 14, 26, 0.08);
+}
+[data-theme="light"] input[type="range"].techno::-webkit-slider-thumb,
+[data-theme="light"] input[type="range"].techno::-moz-range-thumb {
+  background: #ffffff;
+  border-color: var(--color-accent-indigo);
+}
+
 
 
 @layer base {

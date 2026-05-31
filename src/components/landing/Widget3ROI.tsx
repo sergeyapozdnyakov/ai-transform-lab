@@ -40,7 +40,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
           <SliderRow label={t.roi.rate} value={rate} min={500} max={5000} step={100} onChange={setRate} display={`${fmtNum(rate)} ₽`} />
 
           {/* Inefficiency bar */}
-          <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 p-4 space-y-3">
+          <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] p-4 space-y-3">
             <div className="space-y-1.5">
               <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
                 <span className="text-[var(--color-accent-amber)]">{t.roi.currentBar}</span>
@@ -93,7 +93,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
               <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
                 {t.roi.implCost}
               </div>
@@ -101,7 +101,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
                 {fmtRub(calc.impl)}
               </div>
             </div>
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
               <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
                 {t.roi.payback}
               </div>
@@ -141,7 +141,7 @@ function SliderRow({ label, value, min, max, step, onChange, display }: {
 function Stat({ label, value, tone, sub, small }: { label: string; value: string; tone: "teal" | "amber"; sub?: string; small?: boolean }) {
   const color = tone === "teal" ? "#14B8A6" : "#F59E0B";
   return (
-    <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+    <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
       <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">{label}</div>
       <div className="flex items-baseline gap-3">
         <div
