@@ -90,8 +90,8 @@
   --color-input-bg-hover: #f1f0ea;
   --color-grid-line: rgba(10, 14, 26, 0.05);
 
-  --color-surface-sunken: #f3f2ec;
-  --color-surface-sunken-soft: #f6f5ef;
+  --color-surface-sunken: #ece9e1;
+  --color-surface-sunken-soft: #f0ede5;
   --color-tooltip-bg: rgba(10, 14, 26, 0.92);
   --color-viz-line: rgba(10, 14, 26, 0.18);
   --color-viz-line-soft: rgba(10, 14, 26, 0.08);
