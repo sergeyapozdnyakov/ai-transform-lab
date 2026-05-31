@@ -150,7 +150,7 @@ export function Widget4ProcessMap() {
                 />
               )}
               <circle cx={n.x} cy={n.y} r={14} fill="var(--color-viz-node)" stroke="var(--color-viz-line-strong)" strokeWidth={1} />
-              <text x={n.x} y={n.y + 3} textAnchor="middle" fontSize="8.5" fill="#F9FAFB" fontFamily="JetBrains Mono">
+              <text x={n.x} y={n.y + 3} textAnchor="middle" fontSize="8.5" fill="var(--color-text-primary)" fontFamily="JetBrains Mono">
                 {n.label}
               </text>
 
