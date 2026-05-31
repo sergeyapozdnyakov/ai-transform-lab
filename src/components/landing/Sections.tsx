@@ -6,7 +6,24 @@ import { Widget2DocExtract } from "./Widget2DocExtract";
 import { Widget3ROI } from "./Widget3ROI";
 import { Widget4ProcessMap } from "./Widget4ProcessMap";
 import { motion, useInView } from "framer-motion";
-import { AlertTriangle, UserX, LineChart, Check, X, ChevronDown, Send } from "lucide-react";
+import { AlertTriangle, UserX, LineChart, Check, X, ChevronDown, Send, Sun, Moon } from "lucide-react";
+
+function useTheme() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const saved = (typeof window !== "undefined" && localStorage.getItem("theme")) as "dark" | "light" | null;
+    const initial = saved ?? "dark";
+    setTheme(initial);
+    document.documentElement.setAttribute("data-theme", initial);
+  }, []);
+  const toggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch {}
+  };
+  return { theme, toggle };
+}
 
 export function Nav({ openModal }: { openModal: () => void }) {
   const { lang, setLang, t } = useI18n();
