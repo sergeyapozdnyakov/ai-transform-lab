@@ -184,7 +184,7 @@ export function Widget4ProcessMap() {
 
         {/* Tooltip — recommendation (when toggle ON) */}
         {show && rec && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-[var(--color-tooltip-bg)] px-4 py-3 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm space-y-2">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-[var(--color-tooltip-bg)] px-4 py-3 text-[12px] text-white backdrop-blur-sm space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-[var(--color-accent-teal)] tracking-[0.1em]">
                 REC.0{hovered} · {rec.title}
@@ -208,7 +208,7 @@ export function Widget4ProcessMap() {
 
         {/* Tooltip — bottleneck reason (when toggle OFF) */}
         {!show && bottleneckHovered && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-[var(--color-tooltip-bg)] px-3 py-2 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-[var(--color-tooltip-bg)] px-3 py-2 text-[12px] text-white backdrop-blur-sm">
             <span className="font-mono text-[10px] text-[var(--color-accent-amber)] mr-2 tracking-[0.1em]">
               BOTTLENECK.0{hovered}
             </span>
