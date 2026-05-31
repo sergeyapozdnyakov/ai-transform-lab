@@ -96,7 +96,7 @@ export function Widget4ProcessMap() {
             >
               <input type="checkbox" className="sr-only" checked={show} onChange={(e) => setShow(e.target.checked)} />
               <span
-                className="absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white transition-transform"
+                className="absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-[var(--color-btn-primary)] transition-transform"
                 style={{ transform: show ? "translateX(20px)" : "translateX(0)" }}
               />
             </span>
@@ -104,7 +104,7 @@ export function Widget4ProcessMap() {
         </div>
       </div>
 
-      <div className="relative rounded-md border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
+      <div className="relative rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-60" />
         <svg viewBox="0 0 900 280" className="relative w-full h-[340px]">
           {/* Base edges */}

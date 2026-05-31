@@ -16,10 +16,21 @@
   --color-text-primary: #f9fafb;
   --color-text-secondary: #9ca3af;
   --color-text-mono: #6b7280;
+  --color-text-strong: #ffffff;
   --color-accent-indigo: #6366f1;
   --color-accent-indigo-soft: rgba(99, 102, 241, 0.08);
   --color-accent-teal: #14b8a6;
   --color-accent-amber: #f59e0b;
+
+  /* Surfaces & buttons (theme-flippable) */
+  --color-btn-primary: #ffffff;
+  --color-btn-primary-fg: #0a0e1a;
+  --color-btn-primary-hover: rgba(255, 255, 255, 0.85);
+  --color-surface-soft: rgba(255, 255, 255, 0.05);
+  --color-surface-soft-hover: rgba(255, 255, 255, 0.10);
+  --color-input-bg: rgba(0, 0, 0, 0.30);
+  --color-input-bg-hover: rgba(0, 0, 0, 0.50);
+  --color-grid-line: rgba(255, 255, 255, 0.025);
 
   --color-background: var(--color-bg-base);
   --color-foreground: var(--color-text-primary);
@@ -47,6 +58,31 @@
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
 }
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --color-bg-base: #f7f7f5;
+  --color-bg-elevated: #ffffff;
+  --color-bg-card: rgba(0, 0, 0, 0.02);
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-emphasis: rgba(0, 0, 0, 0.16);
+  --color-text-primary: #0a0e1a;
+  --color-text-secondary: #4b5563;
+  --color-text-mono: #6b7280;
+  --color-text-strong: #0a0e1a;
+  --color-accent-indigo: #4f46e5;
+  --color-accent-indigo-soft: rgba(79, 70, 229, 0.08);
+
+  --color-btn-primary: #0a0e1a;
+  --color-btn-primary-fg: #ffffff;
+  --color-btn-primary-hover: #1f2937;
+  --color-surface-soft: rgba(0, 0, 0, 0.04);
+  --color-surface-soft-hover: rgba(0, 0, 0, 0.08);
+  --color-input-bg: rgba(0, 0, 0, 0.04);
+  --color-input-bg-hover: rgba(0, 0, 0, 0.08);
+  --color-grid-line: rgba(0, 0, 0, 0.04);
+}
+
 
 @layer base {
   * {
@@ -80,8 +116,8 @@
   }
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
     background-size: 32px 32px;
   }
   .text-balance {

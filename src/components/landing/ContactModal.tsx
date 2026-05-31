@@ -25,7 +25,7 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div className="relative w-full max-w-md rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] p-6 animate-in zoom-in-95 slide-in-from-bottom-4 duration-200">
-        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--color-text-mono)] hover:text-white">
+        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--color-text-mono)] hover:text-[var(--color-text-strong)]">
           <X size={18} />
         </button>
 
@@ -39,16 +39,16 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
               <Field label={t.modal.email + " *"} type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
               <div>
                 <label className="block text-[11px] font-mono uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1.5">{t.modal.team}</label>
-                <select value={form.team} onChange={(e) => setForm({ ...form, team: e.target.value })} className="w-full rounded-md border border-[var(--color-border-subtle)] bg-black/30 px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)]">
+                <select value={form.team} onChange={(e) => setForm({ ...form, team: e.target.value })} className="w-full rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)]">
                   <option value="">—</option>
                   {t.modal.teamOpts.map((o) => <option key={o} value={o}>{o}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-[11px] font-mono uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1.5">{t.modal.desc}</label>
-                <textarea value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} rows={3} maxLength={500} className="w-full rounded-md border border-[var(--color-border-subtle)] bg-black/30 px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)] resize-none" />
+                <textarea value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} rows={3} maxLength={500} className="w-full rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)] resize-none" />
               </div>
-              <button type="submit" className="w-full rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85 mt-2">
+              <button type="submit" className="w-full rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-all hover:bg-[var(--color-btn-primary-hover)] mt-2">
                 {t.modal.submit} →
               </button>
             </form>
@@ -75,7 +75,7 @@ function Field({ label, value, onChange, type = "text" }: { label: string; value
         value={value}
         maxLength={type === "email" ? 255 : 100}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-[var(--color-border-subtle)] bg-black/30 px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)] transition-colors"
+        className="w-full rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-input-bg)] px-3 py-2.5 text-[13px] outline-none focus:border-[var(--color-accent-indigo)] transition-colors"
       />
     </div>
   );
