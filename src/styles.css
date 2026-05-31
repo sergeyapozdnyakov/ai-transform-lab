@@ -69,11 +69,11 @@
 
 /* Light theme overrides — clean, premium, high contrast */
 [data-theme="light"] {
-  --color-bg-base: #fafaf7;
+  --color-bg-base: #ece9e1;
   --color-bg-elevated: #ffffff;
   --color-bg-card: #ffffff;
-  --color-border-subtle: rgba(10, 14, 26, 0.09);
-  --color-border-emphasis: rgba(10, 14, 26, 0.18);
+  --color-border-subtle: rgba(10, 14, 26, 0.10);
+  --color-border-emphasis: rgba(10, 14, 26, 0.22);
   --color-text-primary: #0a0e1a;
   --color-text-secondary: #475569;
   --color-text-mono: #64748b;
@@ -85,10 +85,10 @@
   --color-btn-primary-fg: #ffffff;
   --color-btn-primary-hover: #1f2937;
   --color-surface-soft: #ffffff;
-  --color-surface-soft-hover: #f1f1ec;
+  --color-surface-soft-hover: #f1f0ea;
   --color-input-bg: #ffffff;
-  --color-input-bg-hover: #f1f1ec;
-  --color-grid-line: rgba(10, 14, 26, 0.045);
+  --color-input-bg-hover: #f1f0ea;
+  --color-grid-line: rgba(10, 14, 26, 0.05);
 
   --color-surface-sunken: #f3f2ec;
   --color-surface-sunken-soft: #f6f5ef;
