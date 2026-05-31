@@ -59,6 +59,13 @@ export function Nav({ openModal }: { openModal: () => void }) {
             <span className="text-[var(--color-text-mono)]">|</span>
             <button onClick={() => setLang("en")} className={`px-1.5 py-1 transition-colors ${lang === "en" ? "text-[var(--color-text-strong)]" : "text-[var(--color-text-mono)]"}`}>EN</button>
           </div>
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="flex items-center justify-center h-8 w-8 rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-surface-soft)] text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-soft-hover)] hover:text-[var(--color-text-strong)]"
+          >
+            {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
+          </button>
           <button onClick={openModal} className="rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-surface-soft)] px-3.5 py-1.5 text-[12px] font-medium text-[var(--color-text-strong)] transition-colors hover:bg-[var(--color-surface-soft-hover)]">
             {t.nav.contact}
           </button>
