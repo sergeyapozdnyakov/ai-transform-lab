@@ -30,6 +30,14 @@
   --color-surface-soft-hover: rgba(255, 255, 255, 0.10);
   --color-input-bg: rgba(0, 0, 0, 0.30);
   --color-input-bg-hover: rgba(0, 0, 0, 0.50);
+  --color-surface-sunken: rgba(0, 0, 0, 0.20);
+  --color-surface-sunken-soft: rgba(0, 0, 0, 0.15);
+  --color-tooltip-bg: rgba(0, 0, 0, 0.85);
+  --color-viz-line: rgba(255, 255, 255, 0.15);
+  --color-viz-line-soft: rgba(255, 255, 255, 0.08);
+  --color-viz-line-strong: rgba(255, 255, 255, 0.22);
+  --color-viz-fill: rgba(255, 255, 255, 0.06);
+  --color-viz-node: #0f1422;
   --color-grid-line: rgba(255, 255, 255, 0.025);
 
   --color-background: var(--color-bg-base);
