@@ -28,6 +28,7 @@ function useTheme() {
 export function Nav({ openModal }: { openModal: () => void }) {
   const { lang, setLang, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggle: toggleTheme } = useTheme();
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 12);
     fn();
