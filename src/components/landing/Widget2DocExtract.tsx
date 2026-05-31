@@ -24,7 +24,7 @@ export function Widget2DocExtract() {
   return (
     <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/80 p-6">
       {/* Tabs */}
-      <div className="flex items-center gap-1 mb-6 rounded-md border border-[var(--color-border-subtle)] p-1 bg-black/20 w-fit">
+      <div className="flex items-center gap-1 mb-6 rounded-md border border-[var(--color-border-subtle)] p-1 bg-[var(--color-surface-sunken)] w-fit">
         {t.widget2.tabs.map((tab, i) => (
           <button
             key={i}
@@ -104,7 +104,7 @@ i.ivanov@tehmontaj.ru`}
                     />
                     <div
                       className="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded"
-                      style={{ background: "rgba(0,0,0,0.7)", color: b.color, border: `1px solid ${b.color}55` }}
+                      style={{ background: "var(--color-tooltip-bg)", color: b.color, border: `1px solid ${b.color}55` }}
                     >
                       [{t.widget2.bracketLabels[i]}]
                     </div>

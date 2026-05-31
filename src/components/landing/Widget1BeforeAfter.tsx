@@ -40,7 +40,7 @@ export function Widget1BeforeAfter() {
           const showDelta = tt > 0.5;
           const positive = m.deltaInverted ? deltaPct < 0 : deltaPct > 0;
           return (
-            <div key={i} className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 p-3">
+            <div key={i} className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] p-3">
               <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-2 leading-tight h-6">
                 {m.label}
               </div>
@@ -81,7 +81,7 @@ export function Widget1BeforeAfter() {
       </div>
 
       {/* Flow */}
-      <div className="mt-5 rounded-md bg-black/20 border border-[var(--color-border-subtle)] p-3">
+      <div className="mt-5 rounded-md bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] p-3">
         <div className="flex items-center justify-between gap-1">
           {flow.map((f, i) => {
             const isMid = f.mid;
@@ -91,7 +91,7 @@ export function Widget1BeforeAfter() {
                 <div
                   className="flex-1 rounded border px-1.5 py-1.5 text-center font-mono text-[9px] uppercase tracking-wide truncate transition-colors"
                   style={{
-                    borderColor: isMid ? color + "55" : "rgba(255,255,255,0.08)",
+                    borderColor: isMid ? color + "55" : "var(--color-viz-line-soft)",
                     color,
                     background: isMid ? color + "10" : "transparent",
                   }}

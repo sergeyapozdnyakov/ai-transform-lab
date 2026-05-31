@@ -92,7 +92,7 @@ export function Widget4ProcessMap() {
             <span className="text-[12px] text-[var(--color-text-secondary)] normal-case tracking-normal">{t.procmap.toggle}</span>
             <span
               className="relative inline-block w-10 h-5 rounded-full border border-[var(--color-border-emphasis)] transition-colors"
-              style={{ background: show ? "#14B8A6" : "rgba(255,255,255,0.06)" }}
+              style={{ background: show ? "#14B8A6" : "var(--color-viz-fill)" }}
             >
               <input type="checkbox" className="sr-only" checked={show} onChange={(e) => setShow(e.target.checked)} />
               <span
@@ -115,7 +115,7 @@ export function Widget4ProcessMap() {
               <line
                 key={i}
                 x1={A.x} y1={A.y} x2={B.x} y2={B.y}
-                stroke={bottle && !show ? "rgba(245,158,11,0.45)" : "rgba(255,255,255,0.15)"}
+                stroke={bottle && !show ? "rgba(245,158,11,0.45)" : "var(--color-viz-line)"}
                 strokeWidth={1}
                 strokeDasharray={bottle ? "3 3" : "0"}
               />
@@ -149,7 +149,7 @@ export function Widget4ProcessMap() {
                   opacity={0.75}
                 />
               )}
-              <circle cx={n.x} cy={n.y} r={14} fill="#0F1422" stroke="rgba(255,255,255,0.22)" strokeWidth={1} />
+              <circle cx={n.x} cy={n.y} r={14} fill="var(--color-viz-node)" stroke="var(--color-viz-line-strong)" strokeWidth={1} />
               <text x={n.x} y={n.y + 3} textAnchor="middle" fontSize="8.5" fill="#F9FAFB" fontFamily="JetBrains Mono">
                 {n.label}
               </text>
@@ -184,7 +184,7 @@ export function Widget4ProcessMap() {
 
         {/* Tooltip — recommendation (when toggle ON) */}
         {show && rec && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-black/85 px-4 py-3 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm space-y-2">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-[var(--color-tooltip-bg)] px-4 py-3 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-[var(--color-accent-teal)] tracking-[0.1em]">
                 REC.0{hovered} · {rec.title}
@@ -208,7 +208,7 @@ export function Widget4ProcessMap() {
 
         {/* Tooltip — bottleneck reason (when toggle OFF) */}
         {!show && bottleneckHovered && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-black/85 px-3 py-2 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-[var(--color-tooltip-bg)] px-3 py-2 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm">
             <span className="font-mono text-[10px] text-[var(--color-accent-amber)] mr-2 tracking-[0.1em]">
               BOTTLENECK.0{hovered}
             </span>
