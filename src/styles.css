@@ -89,6 +89,15 @@
   --color-input-bg: #ffffff;
   --color-input-bg-hover: #f1f1ec;
   --color-grid-line: rgba(10, 14, 26, 0.045);
+
+  --color-surface-sunken: #f3f2ec;
+  --color-surface-sunken-soft: #f6f5ef;
+  --color-tooltip-bg: rgba(10, 14, 26, 0.92);
+  --color-viz-line: rgba(10, 14, 26, 0.18);
+  --color-viz-line-soft: rgba(10, 14, 26, 0.08);
+  --color-viz-line-strong: rgba(10, 14, 26, 0.28);
+  --color-viz-fill: rgba(10, 14, 26, 0.04);
+  --color-viz-node: #ffffff;
 }
 
 [data-theme="light"] ::selection {
