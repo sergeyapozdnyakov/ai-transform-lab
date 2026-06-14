@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useI18n } from "../../lib/i18n";
-import { fmtNum } from "../../lib/format";
+import { fmtNum, fmtRub } from "../../lib/format";
 
 const AUTOMATION = 0.62; // McKinsey benchmark, conservative lower bound
 const QUALITY_LOSS = 0.18; // share of cost lost to errors/rework
@@ -8,10 +8,6 @@ const QUALITY_RECOV = 0.4; // fraction of quality loss recovered with AI
 const WEEKS = 47; // working weeks/year
 const IMPL_BASE = 850_000; // base implementation cost (₽)
 const IMPL_PER_PERSON = 34_000; // ≈ size × 0.04 of base
-
-function fmtRub(n: number) {
-  return `${fmtNum(n)} ₽`;
-}
 
 export function Widget3ROI({ onCta }: { onCta: () => void }) {
   const { t } = useI18n();

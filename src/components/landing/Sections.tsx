@@ -334,7 +334,7 @@ export function Problem() {
                     {c.d}
                   </p>
                   <div className="absolute bottom-3 right-4 font-mono text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-mono)]">
-                    ISSUE 0{i + 1}
+                    ISSUE {String(i + 1).padStart(2, "0")}
                   </div>
                 </div>
               </FadeIn>
@@ -440,7 +440,7 @@ export function Approach({ openModal }: { openModal: () => void }) {
                     className="flex gap-3 text-[13.5px] leading-snug text-[var(--color-text-primary)]"
                   >
                     <span className="font-mono text-[10px] text-[var(--color-text-mono)] mt-1 tabular-nums">
-                      0{i + 1}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <span>{a}</span>
                   </li>
@@ -965,7 +965,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
                 {e.boundaries.items.map((it, i) => (
                   <li key={i} className="py-5 flex gap-5">
                     <span className="font-mono text-[11px] tracking-[0.1em] text-[var(--color-text-mono)] tabular-nums pt-1 shrink-0 w-10">
-                      0{i + 1}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="flex-1">
                       <div className="flex items-start gap-3">
@@ -1260,7 +1260,7 @@ export function Deliverable() {
                     className="flex gap-3 text-[14px] leading-relaxed text-[var(--color-text-primary)]"
                   >
                     <span className="font-mono text-[11px] text-[var(--color-accent-indigo)] mt-0.5 tabular-nums">
-                      0{i + 1}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <span>{d}</span>
                   </li>
