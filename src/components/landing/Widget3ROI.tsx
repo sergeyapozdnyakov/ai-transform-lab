@@ -2,11 +2,11 @@ import { useState, useMemo } from "react";
 import { useI18n } from "../../lib/i18n";
 import { fmtNum } from "../../lib/format";
 
-const AUTOMATION = 0.62;     // McKinsey benchmark, conservative lower bound
-const QUALITY_LOSS = 0.18;   // share of cost lost to errors/rework
-const QUALITY_RECOV = 0.4;   // fraction of quality loss recovered with AI
-const WEEKS = 47;            // working weeks/year
-const IMPL_BASE = 850_000;   // base implementation cost (₽)
+const AUTOMATION = 0.62; // McKinsey benchmark, conservative lower bound
+const QUALITY_LOSS = 0.18; // share of cost lost to errors/rework
+const QUALITY_RECOV = 0.4; // fraction of quality loss recovered with AI
+const WEEKS = 47; // working weeks/year
+const IMPL_BASE = 850_000; // base implementation cost (₽)
 const IMPL_PER_PERSON = 34_000; // ≈ size × 0.04 of base
 
 function fmtRub(n: number) {
@@ -35,19 +35,46 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
       <div className="grid lg:grid-cols-[1fr_1.15fr] gap-8">
         {/* Inputs */}
         <div className="space-y-6">
-          <SliderRow label={t.roi.teamSize} value={team} min={5} max={200} step={1} onChange={setTeam} display={`${team}`} />
-          <SliderRow label={t.roi.hours} value={hours} min={2} max={25} step={1} onChange={setHours} display={`${hours} ч`} />
-          <SliderRow label={t.roi.rate} value={rate} min={500} max={5000} step={100} onChange={setRate} display={`${fmtNum(rate)} ₽`} />
+          <SliderRow
+            label={t.roi.teamSize}
+            value={team}
+            min={5}
+            max={200}
+            step={1}
+            onChange={setTeam}
+            display={`${team}`}
+          />
+          <SliderRow
+            label={t.roi.hours}
+            value={hours}
+            min={2}
+            max={25}
+            step={1}
+            onChange={setHours}
+            display={`${hours} ч`}
+          />
+          <SliderRow
+            label={t.roi.rate}
+            value={rate}
+            min={500}
+            max={5000}
+            step={100}
+            onChange={setRate}
+            display={`${fmtNum(rate)} ₽`}
+          />
 
           {/* Inefficiency bar */}
-          <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 p-4 space-y-3">
+          <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] p-4 space-y-3">
             <div className="space-y-1.5">
               <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
                 <span className="text-[var(--color-accent-amber)]">{t.roi.currentBar}</span>
                 <span className="text-[var(--color-text-mono)] tabular-nums">100%</span>
               </div>
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
-                <div className="h-full bg-[var(--color-accent-amber)]/80" style={{ width: "100%" }} />
+              <div className="h-3 rounded-sm bg-[var(--color-surface-sunken-soft)] overflow-hidden border border-[var(--color-border-subtle)]">
+                <div
+                  className="h-full bg-[var(--color-accent-amber)]/80"
+                  style={{ width: "100%" }}
+                />
               </div>
             </div>
 
@@ -63,7 +90,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
                 <span className="text-[var(--color-accent-teal)]">{t.roi.afterBar}</span>
                 <span className="text-[var(--color-text-mono)] tabular-nums">{calc.afterPct}%</span>
               </div>
-              <div className="h-3 rounded-sm bg-black/30 overflow-hidden border border-[var(--color-border-subtle)]">
+              <div className="h-3 rounded-sm bg-[var(--color-surface-sunken-soft)] overflow-hidden border border-[var(--color-border-subtle)]">
                 <div
                   className="h-full bg-[var(--color-accent-teal)] transition-all duration-500"
                   style={{ width: `${calc.afterPct}%` }}
@@ -75,6 +102,19 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
           <p className="text-[11px] font-mono leading-relaxed text-[var(--color-text-mono)] border-t border-[var(--color-border-subtle)] pt-4">
             {t.roi.disclaimer}
           </p>
+          <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-[var(--color-text-mono)]">
+            {t.roi.sources.map((source) => (
+              <a
+                key={source.url}
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-[var(--color-border-emphasis)] underline-offset-4 hover:text-[var(--color-text-strong)]"
+              >
+                {source.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Outputs */}
@@ -93,7 +133,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
               <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
                 {t.roi.implCost}
               </div>
@@ -101,19 +141,22 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
                 {fmtRub(calc.impl)}
               </div>
             </div>
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
+            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
               <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
                 {t.roi.payback}
               </div>
               <div className="font-mono text-[16px] tabular-nums text-[var(--color-text-primary)]">
-                {calc.payback} <span className="text-[12px] text-[var(--color-text-secondary)]">{t.roi.months}</span>
+                {calc.payback}{" "}
+                <span className="text-[12px] text-[var(--color-text-secondary)]">
+                  {t.roi.months}
+                </span>
               </div>
             </div>
           </div>
 
           <button
             onClick={onCta}
-            className="w-full mt-2 rounded-md bg-white px-5 py-3 text-[14px] font-medium text-black transition-all hover:bg-white/85"
+            className="w-full mt-2 rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-colors hover:bg-[var(--color-btn-primary-hover)]"
           >
             {t.roi.cta} →
           </button>
@@ -123,26 +166,63 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
   );
 }
 
-function SliderRow({ label, value, min, max, step, onChange, display }: {
-  label: string; value: number; min: number; max: number; step: number;
-  onChange: (n: number) => void; display: string;
+function SliderRow({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  display,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (n: number) => void;
+  display: string;
 }) {
   return (
     <div>
       <div className="flex items-baseline justify-between mb-2">
         <span className="text-[13px] text-[var(--color-text-secondary)]">{label}</span>
-        <span className="font-mono text-[13px] tabular-nums text-[var(--color-text-primary)]">{display}</span>
+        <span className="font-mono text-[13px] tabular-nums text-[var(--color-text-primary)]">
+          {display}
+        </span>
       </div>
-      <input type="range" className="techno" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} />
+      <input
+        type="range"
+        className="techno"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
     </div>
   );
 }
 
-function Stat({ label, value, tone, sub, small }: { label: string; value: string; tone: "teal" | "amber"; sub?: string; small?: boolean }) {
+function Stat({
+  label,
+  value,
+  tone,
+  sub,
+  small,
+}: {
+  label: string;
+  value: string;
+  tone: "teal" | "amber";
+  sub?: string;
+  small?: boolean;
+}) {
   const color = tone === "teal" ? "#14B8A6" : "#F59E0B";
   return (
-    <div className="rounded-md border border-[var(--color-border-subtle)] bg-black/20 px-4 py-3">
-      <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">{label}</div>
+    <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
+      <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
+        {label}
+      </div>
       <div className="flex items-baseline gap-3">
         <div
           className="font-mono tabular-nums leading-none"
@@ -150,7 +230,11 @@ function Stat({ label, value, tone, sub, small }: { label: string; value: string
         >
           {value}
         </div>
-        {sub && <span className="font-mono text-[12px]" style={{ color }}>{sub}</span>}
+        {sub && (
+          <span className="font-mono text-[12px]" style={{ color }}>
+            {sub}
+          </span>
+        )}
       </div>
     </div>
   );

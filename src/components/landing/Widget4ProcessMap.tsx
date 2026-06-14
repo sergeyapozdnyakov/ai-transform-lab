@@ -7,10 +7,12 @@ type Node = {
   y: number;
   label: string;
   bottleneck?: number; // index in bottleneckReasons (0-3)
-  ai?: number;         // 1..4 — recommendation marker
+  ai?: number; // 1..4 — recommendation marker
 };
 
 type Edge = [string, string, boolean?]; // [from, to, isAiNew]
+
+const NODE_H = 32;
 
 const nodes: Node[] = [
   // Inbound (left)
@@ -47,20 +49,29 @@ const nodes: Node[] = [
 ];
 
 const edges: Edge[] = [
-  ["lead", "route"], ["call", "route"], ["chat", "route"], ["mail", "route"],
-  ["route", "qual"], ["route", "stock"],
+  ["lead", "route"],
+  ["call", "route"],
+  ["chat", "route"],
+  ["mail", "route"],
+  ["route", "qual"],
+  ["route", "stock"],
   ["qual", "kp"],
-  ["stock", "price"], ["stock", "kp"],
+  ["stock", "price"],
+  ["stock", "kp"],
   ["price", "kp"],
-  ["kp", "agree"], ["agree", "contract"], ["agree", "prod"],
-  ["contract", "ctrl"], ["prod", "logi"], ["logi", "ctrl"],
+  ["kp", "agree"],
+  ["agree", "contract"],
+  ["agree", "prod"],
+  ["contract", "ctrl"],
+  ["prod", "logi"],
+  ["logi", "ctrl"],
 ];
 
 // Extra edges when "Show recommendations" is ON — represents new AI data flows
 const aiEdges: Edge[] = [
-  ["qual", "kp", true],     // AI pre-fills proposal from qualified data
-  ["price", "ctrl", true],  // pricing telemetry into monitoring
-  ["ctrl", "agree", true],  // proactive feedback loop
+  ["qual", "kp", true], // AI pre-fills proposal from qualified data
+  ["price", "ctrl", true], // pricing telemetry into monitoring
+  ["ctrl", "agree", true], // proactive feedback loop
 ];
 
 export function Widget4ProcessMap() {
@@ -70,31 +81,42 @@ export function Widget4ProcessMap() {
 
   const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
   const labels = t.procmap.tooltipLabels;
+  const nodeLabels = t.procmap.nodes as Record<string, string>;
   const rec = hovered ? t.procmap.recommendations[hovered - 1] : null;
   const bottleneckHovered = hovered && t.procmap.bottleneckReasons[hovered - 1];
 
   return (
-    <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/80 p-6">
-      <div className="flex items-center justify-between mb-5 gap-4">
+    <div className="w-full min-w-0 max-w-full rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/80 p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5 gap-4">
         <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">
-          PROCESS MAP · FRAGMENT
+          {t.procmap.mapLabel}
         </span>
-        <div className="flex items-center gap-4 font-mono text-[10px] tracking-[0.08em] uppercase">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] tracking-[0.08em] uppercase">
           <span className="flex items-center gap-1.5 text-[var(--color-text-mono)]">
-            <span className="inline-block w-2 h-2 rounded-full border" style={{ borderColor: "#EF4444" }} />
+            <span
+              className="inline-block w-2 h-2 rounded-full border"
+              style={{ borderColor: "#EF4444" }}
+            />
             {t.procmap.bottleneckLegend}
           </span>
           <span className="flex items-center gap-1.5 text-[var(--color-text-mono)]">
             <span className="inline-block w-2 h-2 rounded-full" style={{ background: "#14B8A6" }} />
             {t.procmap.aiPointLegend}
           </span>
-          <label className="flex items-center gap-3 cursor-pointer select-none">
-            <span className="text-[12px] text-[var(--color-text-secondary)] normal-case tracking-normal">{t.procmap.toggle}</span>
+          <label className="flex items-center gap-3 cursor-pointer select-none min-w-0">
+            <span className="text-[12px] text-[var(--color-text-secondary)] normal-case tracking-normal">
+              {t.procmap.toggle}
+            </span>
             <span
               className="relative inline-block w-10 h-5 rounded-full border border-[var(--color-border-emphasis)] transition-colors"
-              style={{ background: show ? "#14B8A6" : "rgba(255,255,255,0.06)" }}
+              style={{ background: show ? "#14B8A6" : "var(--color-viz-fill)" }}
             >
-              <input type="checkbox" className="sr-only" checked={show} onChange={(e) => setShow(e.target.checked)} />
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={show}
+                onChange={(e) => setShow(e.target.checked)}
+              />
               <span
                 className="absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white transition-transform"
                 style={{ transform: show ? "translateX(20px)" : "translateX(0)" }}
@@ -104,18 +126,22 @@ export function Widget4ProcessMap() {
         </div>
       </div>
 
-      <div className="relative rounded-md border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
+      <div className="relative rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-60" />
-        <svg viewBox="0 0 900 280" className="relative w-full h-[340px]">
+        <svg viewBox="0 0 900 280" className="relative h-[320px] w-full max-w-full sm:h-[380px]">
           {/* Base edges */}
           {edges.map(([a, b], i) => {
-            const A = byId[a]; const B = byId[b];
-            const bottle = (A.bottleneck !== undefined) || (B.bottleneck !== undefined);
+            const A = byId[a];
+            const B = byId[b];
+            const bottle = A.bottleneck !== undefined || B.bottleneck !== undefined;
             return (
               <line
                 key={i}
-                x1={A.x} y1={A.y} x2={B.x} y2={B.y}
-                stroke={bottle && !show ? "rgba(245,158,11,0.45)" : "rgba(255,255,255,0.15)"}
+                x1={A.x}
+                y1={A.y}
+                x2={B.x}
+                y2={B.y}
+                stroke={bottle && !show ? "rgba(245,158,11,0.45)" : "var(--color-viz-line)"}
                 strokeWidth={1}
                 strokeDasharray={bottle ? "3 3" : "0"}
               />
@@ -123,68 +149,126 @@ export function Widget4ProcessMap() {
           })}
 
           {/* AI-added edges */}
-          {show && aiEdges.map(([a, b], i) => {
-            const A = byId[a]; const B = byId[b];
-            return (
-              <line
-                key={"ai" + i}
-                x1={A.x} y1={A.y} x2={B.x} y2={B.y}
-                stroke="#14B8A6"
-                strokeWidth={1.2}
-                strokeDasharray="2 4"
-                opacity={0.7}
-              />
-            );
-          })}
+          {show &&
+            aiEdges.map(([a, b], i) => {
+              const A = byId[a];
+              const B = byId[b];
+              return (
+                <line
+                  key={"ai" + i}
+                  x1={A.x}
+                  y1={A.y}
+                  x2={B.x}
+                  y2={B.y}
+                  stroke="#14B8A6"
+                  strokeWidth={1.2}
+                  strokeDasharray="2 4"
+                  opacity={0.7}
+                />
+              );
+            })}
 
           {/* Nodes */}
-          {nodes.map((n) => (
-            <g key={n.id}>
-              {n.bottleneck !== undefined && (
-                <circle
-                  cx={n.x} cy={n.y} r={show ? 22 : 20}
-                  fill="none"
-                  stroke={show ? "#14B8A6" : "#EF4444"}
-                  strokeWidth={1.3}
-                  opacity={0.75}
+          {nodes.map((n) => {
+            const label = nodeLabels[n.id] ?? n.label;
+            const w = nodeWidth(label);
+            const x = n.x - w / 2;
+            const y = n.y - NODE_H / 2;
+            const hoverRect = {
+              x: x - 8,
+              y: y - 8,
+              width: w + 16,
+              height: NODE_H + 16,
+              rx: 14,
+            };
+            return (
+              <g key={n.id}>
+                {n.bottleneck !== undefined && (
+                  <rect
+                    x={x - 5}
+                    y={y - 5}
+                    width={w + 10}
+                    height={NODE_H + 10}
+                    rx={12}
+                    fill="none"
+                    stroke={show ? "#14B8A6" : "#EF4444"}
+                    strokeWidth={1.4}
+                    opacity={0.78}
+                  />
+                )}
+                <rect
+                  x={x}
+                  y={y}
+                  width={w}
+                  height={NODE_H}
+                  rx={9}
+                  fill="var(--color-viz-node)"
+                  stroke="var(--color-viz-line-strong)"
+                  strokeWidth={1.2}
                 />
-              )}
-              <circle cx={n.x} cy={n.y} r={14} fill="#0F1422" stroke="rgba(255,255,255,0.22)" strokeWidth={1} />
-              <text x={n.x} y={n.y + 3} textAnchor="middle" fontSize="8.5" fill="#F9FAFB" fontFamily="JetBrains Mono">
-                {n.label}
-              </text>
-
-              {/* AI recommendation marker */}
-              {show && n.ai && (
-                <g
-                  style={{ cursor: "pointer" }}
-                  onMouseEnter={() => setHovered(n.ai!)}
-                  onMouseLeave={() => setHovered(null)}
+                <text
+                  x={n.x}
+                  y={n.y + 4}
+                  textAnchor="middle"
+                  fontSize="11.5"
+                  fontWeight={650}
+                  fill="var(--color-text-primary)"
+                  fontFamily="JetBrains Mono"
                 >
-                  <circle cx={n.x + 20} cy={n.y - 18} r={9} fill="#14B8A6" />
-                  <text x={n.x + 20} y={n.y - 15} textAnchor="middle" fontSize="9" fontWeight={600} fill="#0A0E1A" fontFamily="JetBrains Mono">
-                    0{n.ai}
-                  </text>
-                </g>
-              )}
+                  {label}
+                </text>
 
-              {/* Bottleneck hover trigger (when not in show mode) */}
-              {!show && n.bottleneck !== undefined && (
-                <circle
-                  cx={n.x} cy={n.y} r={22}
-                  fill="transparent"
-                  style={{ cursor: "pointer" }}
-                  onMouseEnter={() => setHovered(n.bottleneck! + 1)}
-                  onMouseLeave={() => setHovered(null)}
-                />
-              )}
-            </g>
-          ))}
+                {/* AI recommendation marker */}
+                {show && n.ai && (
+                  <g
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={() => setHovered(n.ai!)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    <circle cx={n.x + w / 2 - 2} cy={n.y - 22} r={10} fill="#14B8A6" />
+                    <text
+                      x={n.x + w / 2 - 2}
+                      y={n.y - 18.5}
+                      textAnchor="middle"
+                      fontSize="9"
+                      fontWeight={600}
+                      fill="#0A0E1A"
+                      fontFamily="JetBrains Mono"
+                    >
+                      0{n.ai}
+                    </text>
+                  </g>
+                )}
+
+                {/* Bottleneck hover trigger (when not in show mode) */}
+                {!show && n.bottleneck !== undefined && (
+                  <rect
+                    {...hoverRect}
+                    fill="transparent"
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={() => setHovered(n.bottleneck! + 1)}
+                    onMouseLeave={() => setHovered(null)}
+                  />
+                )}
+
+                {/* Recommendation hover trigger: the whole process node, not only the small marker. */}
+                {show && n.ai && (
+                  <rect
+                    {...hoverRect}
+                    fill="transparent"
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={() => setHovered(n.ai!)}
+                    onMouseLeave={() => setHovered(null)}
+                  />
+                )}
+              </g>
+            );
+          })}
         </svg>
 
         {/* Tooltip — recommendation (when toggle ON) */}
         {show && rec && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-black/85 px-4 py-3 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm space-y-2">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-teal)]/40 bg-[var(--color-tooltip-bg)] px-4 py-3 text-[12px] text-white backdrop-blur-sm space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] text-[var(--color-accent-teal)] tracking-[0.1em]">
                 REC.0{hovered} · {rec.title}
@@ -208,7 +292,7 @@ export function Widget4ProcessMap() {
 
         {/* Tooltip — bottleneck reason (when toggle OFF) */}
         {!show && bottleneckHovered && (
-          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-black/85 px-3 py-2 text-[12px] text-[var(--color-text-primary)] backdrop-blur-sm">
+          <div className="absolute bottom-3 left-3 right-3 rounded border border-[var(--color-accent-amber)]/40 bg-[var(--color-tooltip-bg)] px-3 py-2 text-[12px] text-white backdrop-blur-sm">
             <span className="font-mono text-[10px] text-[var(--color-accent-amber)] mr-2 tracking-[0.1em]">
               BOTTLENECK.0{hovered}
             </span>
@@ -227,10 +311,26 @@ export function Widget4ProcessMap() {
   );
 }
 
-function KV({ label, value, mono, accent }: { label: string; value: string; mono?: boolean; accent?: boolean }) {
+function nodeWidth(label: string) {
+  return Math.max(64, Math.min(112, label.length * 7.2 + 24));
+}
+
+function KV({
+  label,
+  value,
+  mono,
+  accent,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  accent?: boolean;
+}) {
   return (
     <div>
-      <div className="font-mono text-[9px] tracking-[0.1em] text-[var(--color-text-mono)]">{label}</div>
+      <div className="font-mono text-[9px] tracking-[0.1em] text-[var(--color-text-mono)]">
+        {label}
+      </div>
       <div
         className={`${mono ? "font-mono" : ""} text-[12px] leading-snug`}
         style={{ color: accent ? "#14B8A6" : "var(--color-text-primary)" }}

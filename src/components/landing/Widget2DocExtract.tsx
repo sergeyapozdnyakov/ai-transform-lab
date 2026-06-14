@@ -12,48 +12,10 @@ const BRACKETS = [
   { top: 260, height: 18, color: "#F472B6", key: "delivery" },
 ];
 
-export function Widget2DocExtract() {
-  const { t } = useI18n();
-  const [stage, setStage] = useState(0);
-
-  const statusText =
-    stage === 2 ? t.widget2.statusDone : stage === 1 ? t.widget2.statusParsing : t.widget2.statusIdle;
-  const statusColor =
-    stage === 2 ? "var(--color-accent-teal)" : stage === 1 ? "var(--color-accent-indigo)" : "var(--color-text-mono)";
-
-  return (
-    <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/80 p-6">
-      {/* Tabs */}
-      <div className="flex items-center gap-1 mb-6 rounded-md border border-[var(--color-border-subtle)] p-1 bg-black/20 w-fit">
-        {t.widget2.tabs.map((tab, i) => (
-          <button
-            key={i}
-            onClick={() => setStage(i)}
-            className={`px-4 py-2 rounded text-[12px] font-mono uppercase tracking-[0.08em] transition-colors ${
-              stage === i ? "bg-[var(--color-accent-indigo)] text-white" : "text-[var(--color-text-secondary)] hover:text-white"
-            }`}
-          >
-            <span className="opacity-60 mr-2">0{i + 1}</span>
-            {tab}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Document side */}
-        <div className="relative rounded-lg border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-black/30">
-            <div className="flex items-center gap-2 text-[12px] text-[var(--color-text-secondary)]">
-              <FileText size={14} strokeWidth={1.5} className="text-[var(--color-accent-indigo)]" />
-              <span className="font-mono text-[11px]">КП-2026-318.pdf</span>
-            </div>
-            <span className="font-mono text-[10px] text-[var(--color-text-mono)]">{t.widget2.docMeta}</span>
-          </div>
-
-          <div className="relative p-5 h-[440px] overflow-hidden">
-            {/* Mock KP document */}
-            <pre className="font-mono text-[10.5px] leading-[1.55] text-[var(--color-text-primary)] whitespace-pre-wrap">
-{`ООО «ТехМонтажСервис»
+const SAMPLES = {
+  ru: {
+    fileName: "КП-2026-318.pdf",
+    documentText: `ООО «ТехМонтажСервис»
 ИНН 7728456789  ·  +7 (495) 234-56-78
 ул. Профсоюзная, 84/32, Москва
 
@@ -81,7 +43,107 @@ export function Widget2DocExtract() {
 Доставка ТК «Деловые Линии» — покупатель.
 
 Менеджер: Иванов И.С.
-i.ivanov@tehmontaj.ru`}
+i.ivanov@tehmontaj.ru`,
+    supplierName: "ООО ТехМонтажСервис",
+    documentNumber: "КП-2026/318",
+    items: ["Подшипник SKF 6205-2RS1", "Манжета 25×42×7", "Подшипник упорный 8205"],
+    carrier: "Деловые Линии",
+    reviewPath: "items[1].vat_included",
+  },
+  en: {
+    fileName: "QUOTE-2026-318.pdf",
+    documentText: `TechMontage Service LLC
+Tax ID 7728456789  ·  +7 (495) 234-56-78
+84/32 Profsoyuznaya St., Moscow
+
+Commercial proposal No. CP-2026/318
+dated May 14, 2026
+
+Dear partners, please find below our quote
+for component supply request
+dated 2026-05-11:
+
+  1. SKF 6205-2RS1 radial bearing
+     240 pcs · RUB 487/pc excl. VAT
+     delivery lead time: 14 business days
+
+  2. Reinforced oil seal 25×42×7
+     500 pcs · RUB 92.50
+     in stock, shipment in ~3 days
+
+  3. 8205 thrust bearing, 80 pcs
+     price with 5% discount — RUB 1,124/unit
+     manufacturing lead time: up to 21 days
+
+Payment: 50% advance, 50% on shipment.
+Prices valid until 2026-06-30.
+Delivery via Delovye Linii — paid by buyer.
+
+Manager: Ivanov I.S.
+i.ivanov@tehmontaj.ru`,
+    supplierName: "TechMontage Service LLC",
+    documentNumber: "CP-2026/318",
+    items: ["SKF 6205-2RS1 radial bearing", "Reinforced oil seal 25×42×7", "8205 thrust bearing"],
+    carrier: "Delovye Linii",
+    reviewPath: "items[1].vat_included",
+  },
+};
+
+export function Widget2DocExtract() {
+  const { lang, t } = useI18n();
+  const [stage, setStage] = useState(0);
+  const sample = SAMPLES[lang];
+
+  const statusText =
+    stage === 2
+      ? t.widget2.statusDone
+      : stage === 1
+        ? t.widget2.statusParsing
+        : t.widget2.statusIdle;
+  const statusColor =
+    stage === 2
+      ? "var(--color-accent-teal)"
+      : stage === 1
+        ? "var(--color-accent-indigo)"
+        : "var(--color-text-mono)";
+
+  return (
+    <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/80 p-4 sm:p-6">
+      {/* Tabs */}
+      <div className="grid grid-cols-3 gap-1 mb-6 rounded-md border border-[var(--color-border-subtle)] p-1 bg-[var(--color-surface-sunken)] w-full sm:inline-grid sm:w-auto">
+        {t.widget2.tabs.map((tab, i) => (
+          <button
+            key={i}
+            onClick={() => setStage(i)}
+            className={`min-w-0 px-2 sm:px-4 py-2 rounded text-[11px] sm:text-[12px] font-mono uppercase tracking-[0.04em] sm:tracking-[0.08em] transition-colors ${
+              stage === i
+                ? "bg-[var(--color-accent-indigo)] text-white"
+                : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-strong)]"
+            }`}
+          >
+            <span className="opacity-60 mr-1 sm:mr-2">0{i + 1}</span>
+            <span className="break-words">{tab}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6 min-w-0">
+        {/* Document side */}
+        <div className="relative rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken-soft)]">
+            <div className="flex items-center gap-2 text-[12px] text-[var(--color-text-secondary)]">
+              <FileText size={14} strokeWidth={1.5} className="text-[var(--color-accent-indigo)]" />
+              <span className="font-mono text-[11px]">{sample.fileName}</span>
+            </div>
+            <span className="font-mono text-[10px] text-[var(--color-text-mono)]">
+              {t.widget2.docMeta}
+            </span>
+          </div>
+
+          <div className="relative p-5 h-[440px] overflow-hidden">
+            {/* Mock KP document */}
+            <pre className="font-mono text-[10.5px] leading-[1.55] text-[var(--color-text-primary)] whitespace-pre-wrap">
+              {sample.documentText}
             </pre>
 
             {/* Bracket markers — stage 1+ */}
@@ -104,7 +166,11 @@ i.ivanov@tehmontaj.ru`}
                     />
                     <div
                       className="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded"
-                      style={{ background: "rgba(0,0,0,0.7)", color: b.color, border: `1px solid ${b.color}55` }}
+                      style={{
+                        background: "var(--color-tooltip-bg)",
+                        color: b.color,
+                        border: `1px solid ${b.color}55`,
+                      }}
                     >
                       [{t.widget2.bracketLabels[i]}]
                     </div>
@@ -119,13 +185,15 @@ i.ivanov@tehmontaj.ru`}
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-14 scan-sweep"
                   style={{
-                    background: "linear-gradient(to bottom, transparent, rgba(99,102,241,0.20), transparent)",
+                    background:
+                      "linear-gradient(to bottom, transparent, rgba(99,102,241,0.20), transparent)",
                     borderBottom: "1px solid rgba(99,102,241,0.7)",
                   }}
                 />
                 <div className="pointer-events-none absolute top-3 right-3 space-y-0.5 font-mono text-[9px] tracking-[0.08em] text-right">
                   <div className="text-[var(--color-accent-indigo)]">
-                    <span className="pulse-dot inline-block mr-1">●</span>{t.widget2.techRunning}
+                    <span className="pulse-dot inline-block mr-1">●</span>
+                    {t.widget2.techRunning}
                   </div>
                   <div className="text-[var(--color-text-mono)]">{t.widget2.techTokens}</div>
                   <div className="text-[var(--color-text-mono)]">{t.widget2.techTime}</div>
@@ -137,10 +205,14 @@ i.ivanov@tehmontaj.ru`}
         </div>
 
         {/* Result side */}
-        <div className="rounded-lg border border-[var(--color-border-subtle)] bg-black/30 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-black/30">
-            <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">structured.json</span>
-            <span className="font-mono text-[10px]" style={{ color: statusColor }}>{statusText}</span>
+        <div className="rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken-soft)]">
+            <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">
+              structured.json
+            </span>
+            <span className="font-mono text-[10px]" style={{ color: statusColor }}>
+              {statusText}
+            </span>
           </div>
 
           <div className="p-5 h-[440px] overflow-auto">
@@ -150,12 +222,17 @@ i.ivanov@tehmontaj.ru`}
                 {stage === 1 && (
                   <div className="space-y-1.5 mt-4">
                     {t.widget2.bracketLabels.map((label, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[var(--color-text-secondary)]">
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 text-[var(--color-text-secondary)]"
+                      >
                         <span className="text-[var(--color-accent-indigo)]">[{i + 1}]</span>
                         <span>detecting</span>
                         <span className="text-[var(--color-text-mono)]">→</span>
                         <span>{label}</span>
-                        <span className="ml-auto text-[var(--color-accent-indigo)] pulse-dot">●</span>
+                        <span className="ml-auto text-[var(--color-accent-indigo)] pulse-dot">
+                          ●
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -164,37 +241,89 @@ i.ivanov@tehmontaj.ru`}
             ) : (
               <div className="animate-in fade-in duration-300">
                 <pre className="font-mono text-[10.5px] leading-[1.5] text-[var(--color-text-primary)] whitespace-pre">
-{`{
-  `}<span style={{ color: "#6366F1" }}>"supplier"</span>{`: {
-    "name": `}<span style={{ color: "#86efac" }}>"ООО ТехМонтажСервис"</span>{`,
-    "inn": `}<span style={{ color: "#86efac" }}>"7728456789"</span>{`,
-    "phone": `}<span style={{ color: "#86efac" }}>"+74952345678"</span>{`,
-    "email": `}<span style={{ color: "#86efac" }}>"i.ivanov@tehmontaj.ru"</span>{`
+                  {`{
+  `}
+                  <span style={{ color: "#6366F1" }}>"supplier"</span>
+                  {`: {
+    "name": `}
+                  <span style={{ color: "#86efac" }}>"{sample.supplierName}"</span>
+                  {`,
+    "inn": `}
+                  <span style={{ color: "#86efac" }}>"7728456789"</span>
+                  {`,
+    "phone": `}
+                  <span style={{ color: "#86efac" }}>"+74952345678"</span>
+                  {`,
+    "email": `}
+                  <span style={{ color: "#86efac" }}>"i.ivanov@tehmontaj.ru"</span>
+                  {`
   },
-  `}<span style={{ color: "#14B8A6" }}>"document"</span>{`: {
-    "number": `}<span style={{ color: "#86efac" }}>"КП-2026/318"</span>{`,
-    "date": `}<span style={{ color: "#86efac" }}>"2026-05-14"</span>{`,
-    "valid_until": `}<span style={{ color: "#86efac" }}>"2026-06-30"</span>{`
+  `}
+                  <span style={{ color: "#14B8A6" }}>"document"</span>
+                  {`: {
+    "number": `}
+                  <span style={{ color: "#86efac" }}>"{sample.documentNumber}"</span>
+                  {`,
+    "date": `}
+                  <span style={{ color: "#86efac" }}>"2026-05-14"</span>
+                  {`,
+    "valid_until": `}
+                  <span style={{ color: "#86efac" }}>"2026-06-30"</span>
+                  {`
   },
-  `}<span style={{ color: "#F59E0B" }}>"items"</span>{`: [
-    { "name": "Подшипник SKF 6205-2RS1",
-      "qty": `}<span style={{ color: "#fde047" }}>240</span>{`, "price": `}<span style={{ color: "#fde047" }}>487.00</span>{`,
-      "vat_included": `}<span style={{ color: "#fca5a5" }}>false</span>{`, "lead_days": 14,
-      "confidence": `}<span style={{ color: "#14B8A6" }}>0.97</span>{` },
-    { "name": "Манжета 25×42×7",
-      "qty": `}<span style={{ color: "#fde047" }}>500</span>{`, "price": `}<span style={{ color: "#fde047" }}>92.50</span>{`,
-      "vat_included": `}<span style={{ color: "#fde047" }}>null</span>{`, "in_stock": true,
-      "confidence": `}<span style={{ color: "#14B8A6" }}>0.94</span>{` },
-    { "name": "Подшипник упорный 8205",
-      "qty": `}<span style={{ color: "#fde047" }}>80</span>{`, "price": `}<span style={{ color: "#fde047" }}>1124.00</span>{`,
+  `}
+                  <span style={{ color: "#F59E0B" }}>"items"</span>
+                  {`: [
+    { "name": "${sample.items[0]}",
+      "qty": `}
+                  <span style={{ color: "#fde047" }}>240</span>
+                  {`, "price": `}
+                  <span style={{ color: "#fde047" }}>487.00</span>
+                  {`,
+      "vat_included": `}
+                  <span style={{ color: "#fca5a5" }}>false</span>
+                  {`, "lead_days": 14,
+      "confidence": `}
+                  <span style={{ color: "#14B8A6" }}>0.97</span>
+                  {` },
+    { "name": "${sample.items[1]}",
+      "qty": `}
+                  <span style={{ color: "#fde047" }}>500</span>
+                  {`, "price": `}
+                  <span style={{ color: "#fde047" }}>92.50</span>
+                  {`,
+      "vat_included": `}
+                  <span style={{ color: "#fde047" }}>null</span>
+                  {`, "in_stock": true,
+      "confidence": `}
+                  <span style={{ color: "#14B8A6" }}>0.94</span>
+                  {` },
+    { "name": "${sample.items[2]}",
+      "qty": `}
+                  <span style={{ color: "#fde047" }}>80</span>
+                  {`, "price": `}
+                  <span style={{ color: "#fde047" }}>1124.00</span>
+                  {`,
       "discount_pct": 5, "lead_days": 21,
-      "confidence": `}<span style={{ color: "#F59E0B" }}>0.89</span>{` }
+      "confidence": `}
+                  <span style={{ color: "#F59E0B" }}>0.89</span>
+                  {` }
   ],
-  `}<span style={{ color: "#A78BFA" }}>"payment"</span>{`: { "prepay_pct": 50, "trigger": "shipment" },
-  `}<span style={{ color: "#F472B6" }}>"delivery"</span>{`: { "carrier": "Деловые Линии", "paid_by": "buyer" },
-  "total_rub": `}<span style={{ color: "#fde047" }}>253220.00</span>{`,
-  `}<span style={{ color: "#F59E0B" }}>"review_required"</span>{`: [
-    `}<span style={{ color: "#fca5a5" }}>"items[1].vat_included"</span>{`
+  `}
+                  <span style={{ color: "#A78BFA" }}>"payment"</span>
+                  {`: { "prepay_pct": 50, "trigger": "shipment" },
+  `}
+                  <span style={{ color: "#F472B6" }}>"delivery"</span>
+                  {`: { "carrier": "${sample.carrier}", "paid_by": "buyer" },
+  "total_rub": `}
+                  <span style={{ color: "#fde047" }}>253220.00</span>
+                  {`,
+  `}
+                  <span style={{ color: "#F59E0B" }}>"review_required"</span>
+                  {`: [
+    `}
+                  <span style={{ color: "#fca5a5" }}>"{sample.reviewPath}"</span>
+                  {`
   ]
 }`}
                 </pre>
