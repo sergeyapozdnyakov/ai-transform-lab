@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Process Checklist — AI.AUDIT</title>
+    <style>
+      body {
+        margin: 0;
+        background: #0a0e1a;
+        color: #f9fafb;
+        font:
+          16px/1.65 Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 48px 24px 72px;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.15;
+      }
+      h1 {
+        font-size: clamp(34px, 7vw, 56px);
+        margin: 0 0 16px;
+      }
+      h2 {
+        margin-top: 36px;
+        font-size: 24px;
+      }
+      p,
+      li,
+      td {
+        color: #cbd5e1;
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      li,
+      td,
+      a {
+        overflow-wrap: anywhere;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 14px;
+      }
+      th,
+      td {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        color: #f9fafb;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .meta {
+        color: #818cf8;
+        font:
+          12px/1.4 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          monospace;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .note {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 16px 18px;
+      }
+      .lang-switch {
+        display: inline-flex;
+        gap: 10px;
+        margin: 0 0 28px;
+        font:
+          12px/1 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          monospace;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .lang-switch a,
+      .lang-switch span {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 6px;
+        padding: 8px 10px;
+        text-decoration: none;
+      }
+      .lang-switch span {
+        color: #f9fafb;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      @media (max-width: 640px) {
+        main {
+          padding: 28px 16px 48px;
+        }
+        h1 {
+          font-size: 34px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        table,
+        thead,
+        tbody,
+        tr,
+        th,
+        td {
+          display: block;
+        }
+        thead {
+          display: none;
+        }
+        tr {
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 8px;
+          margin: 0 0 12px;
+          overflow: hidden;
+        }
+        td {
+          border: 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        td:last-child {
+          border-bottom: 0;
+        }
+        ol,
+        ul {
+          padding-left: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="lang-switch" aria-label="Language selection">
+        <a href="/docs/ai-process-checklist.html">RU</a>
+        <span>EN</span>
+      </nav>
+      <p class="meta">AI.AUDIT · checklist</p>
+      <h1>Checklist: 20 processes where AI can create value in a mid-market company</h1>
+      <p class="note">
+        This is a preliminary discussion list. It helps select processes worth checking during an
+        audit. A process being listed here is not a guaranteed result: the final estimate depends on
+        data, process maturity, process ownership, and the cost of change.
+      </p>
+
+      <h2>1. How to Use the Checklist</h2>
+      <ol>
+        <li>Mark processes with repeated manual work or recurring errors.</li>
+        <li>Check whether historical data, documents, correspondence, or operation logs exist.</li>
+        <li>Identify who owns the process and will be accountable for impact after rollout.</li>
+        <li>Select 3–5 processes for an initial ROI estimate.</li>
+      </ol>
+
+      <h2>2. 20 Processes for Initial Screening</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Process</th>
+            <th>Where value may appear</th>
+            <th>First question for the process owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01</td>
+            <td>First-line customer request handling</td>
+            <td>Shorter response time and lower first-line workload</td>
+            <td>What share of requests repeats every week?</td>
+          </tr>
+          <tr>
+            <td>02</td>
+            <td>Sales lead qualification</td>
+            <td>Faster separation of promising leads from low-fit requests</td>
+            <td>Which signals distinguish a high-quality lead?</td>
+          </tr>
+          <tr>
+            <td>03</td>
+            <td>Commercial proposal drafting</td>
+            <td>Less manual document assembly and fewer condition errors</td>
+            <td>Which parts of a proposal repeat across deals?</td>
+          </tr>
+          <tr>
+            <td>04</td>
+            <td>CRM meeting notes and next steps</td>
+            <td>Better sales discipline and fewer lost commitments</td>
+            <td>Where are call and meeting outcomes recorded today?</td>
+          </tr>
+          <tr>
+            <td>05</td>
+            <td>Invoice, act, and payment reconciliation</td>
+            <td>Less manual checking and fewer document discrepancies</td>
+            <td>Which discrepancy types occur most often?</td>
+          </tr>
+          <tr>
+            <td>06</td>
+            <td>Management reporting</td>
+            <td>Faster report consolidation and variance explanation</td>
+            <td>How many hours does one recurring report take?</td>
+          </tr>
+          <tr>
+            <td>07</td>
+            <td>Overdue-payment monitoring</td>
+            <td>Earlier risk detection and personalized reminders</td>
+            <td>Which signals usually precede a payment delay?</td>
+          </tr>
+          <tr>
+            <td>08</td>
+            <td>Demand and inventory forecasting</td>
+            <td>Fewer stock-outs on bestsellers and less excess inventory</td>
+            <td>Do you have sales history by product, location, and period?</td>
+          </tr>
+          <tr>
+            <td>09</td>
+            <td>Assortment and promotion analysis</td>
+            <td>Faster view of what sells, what stalls, and why</td>
+            <td>Which decisions are made from this analysis today?</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Stock-replenishment recommendations</td>
+            <td>More accurate orders and fewer manual corrections</td>
+            <td>How often do buyers manually override the automatic calculation?</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Returns, claims, and complaints</td>
+            <td>Faster cause classification and recurring-defect visibility</td>
+            <td>Is there a unified dictionary of return reasons?</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Supplier document checks</td>
+            <td>Less manual extraction of details, dates, and terms</td>
+            <td>Which documents arrive most often, and in what format?</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>Product-card enrichment</td>
+            <td>Faster preparation of descriptions, attributes, and media</td>
+            <td>Which product-card fields are filled manually most often?</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>Contract and appendix comparison</td>
+            <td>Faster discovery of deviations from standard terms</td>
+            <td>Is there an approved template and a list of critical clauses?</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Internal knowledge base</td>
+            <td>Fast search across policies, instructions, and responsible owners</td>
+            <td>Where are the current instructions stored today?</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>Initial candidate screening</td>
+            <td>Less manual resume review against formal criteria</td>
+            <td>Which criteria must not be violated during screening?</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>Employee onboarding and training</td>
+            <td>Faster introduction to company processes and rules</td>
+            <td>Which questions do new employees ask most often?</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>IT support requests</td>
+            <td>Faster ticket classification and standard solution suggestions</td>
+            <td>What share of tickets is closed by a standard instruction?</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>Call and message quality control</td>
+            <td>Detection of script violations and reasons for lost customers</td>
+            <td>Is there an agreed communication-quality scorecard?</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>Operational anomaly detection</td>
+            <td>Earlier discovery of unusual write-offs, discounts, or actions</td>
+            <td>Which deviations are currently detected too late?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. What to Take Into the Initial Estimate</h2>
+      <p>
+        For a quick estimate, choose processes that combine recurring operation volume, measurable
+        cost of error or manual work, clear ownership, and available historical data. This is
+        usually enough to formulate 2–3 ideas for a 30-minute discussion.
+      </p>
+    </main>
+  </body>
+</html>

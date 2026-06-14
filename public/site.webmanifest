@@ -1,0 +1,24 @@
+{
+  "name": "AI.AUDIT — аудит ИИ для среднего бизнеса",
+  "short_name": "AI.AUDIT",
+  "description": "Аудит процессов и дорожная карта внедрения искусственного интеллекта за 3 недели.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "lang": "ru-RU",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
