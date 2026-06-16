@@ -111,7 +111,10 @@ async function handleContactApi(req, res) {
   const payload = await readJsonBody(req);
   const crmResponse = await fetch(CRM_CONTACT_ENDPOINT, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      ...(process.env.CRM_INTAKE_SECRET ? { "x-intake-secret": process.env.CRM_INTAKE_SECRET } : {}),
+    },
     body: JSON.stringify(payload),
   });
 
