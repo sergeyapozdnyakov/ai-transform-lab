@@ -6,6 +6,7 @@ const root = process.cwd();
 const read = (path) => readFileSync(join(root, path), "utf8");
 
 const modal = read("src/components/landing/ContactModal.tsx");
+const advisoryForm = read("src/components/advisory/ContactForm.tsx");
 const i18n = read("src/lib/i18n.tsx");
 const siteChecks = read("scripts/validate-site-content.mjs");
 const nodeServer = read("server-node.mjs");
@@ -34,6 +35,17 @@ assert(
 assert(nodeServer.includes("handleContactApi"), "Landing server must handle contact API requests");
 
 assert(i18n.includes("crmError"), "Translations must include CRM failure fallback copy");
-assert(siteChecks.includes("CRM_CONTACT_ENDPOINT"), "Site content checks must cover CRM endpoint");
+assert(
+  advisoryForm.includes("siteConfig.contact.formEndpoint"),
+  "Qualified contact form must use the centralized same-origin endpoint",
+);
+assert(advisoryForm.includes('method: "POST"'), "Qualified contact form must use POST");
+assert(advisoryForm.includes("pageUrl:"), "Qualified contact form must include source page URL");
+assert(advisoryForm.includes("utm,"), "Qualified contact form must include UTM parameters");
+assert(advisoryForm.includes('setStatus("error")'), "Qualified contact form must expose failures");
+assert(
+  siteChecks.includes("same-origin CRM adapter"),
+  "Site content checks must cover CRM endpoint",
+);
 
 console.log("CRM submit checks passed");

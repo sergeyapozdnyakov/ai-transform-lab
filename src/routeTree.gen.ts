@@ -9,38 +9,253 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ItDiagnosticRouteImport } from './routes/it-diagnostic'
+import { Route as FractionalCioRouteImport } from './routes/fractional-cio'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CasesRouteImport } from './routes/cases'
+import { Route as AiAuditRouteImport } from './routes/ai-audit'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnIndexRouteImport } from './routes/en.index'
+import { Route as EnItDiagnosticRouteImport } from './routes/en.it-diagnostic'
+import { Route as EnFractionalCioRouteImport } from './routes/en.fractional-cio'
+import { Route as EnContactRouteImport } from './routes/en.contact'
+import { Route as EnCasesRouteImport } from './routes/en.cases'
+import { Route as EnAiAuditRouteImport } from './routes/en.ai-audit'
+import { Route as EnAboutRouteImport } from './routes/en.about'
 
+const ItDiagnosticRoute = ItDiagnosticRouteImport.update({
+  id: '/it-diagnostic',
+  path: '/it-diagnostic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FractionalCioRoute = FractionalCioRouteImport.update({
+  id: '/fractional-cio',
+  path: '/fractional-cio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesRoute = CasesRouteImport.update({
+  id: '/cases',
+  path: '/cases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAuditRoute = AiAuditRouteImport.update({
+  id: '/ai-audit',
+  path: '/ai-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnItDiagnosticRoute = EnItDiagnosticRouteImport.update({
+  id: '/en/it-diagnostic',
+  path: '/en/it-diagnostic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnFractionalCioRoute = EnFractionalCioRouteImport.update({
+  id: '/en/fractional-cio',
+  path: '/en/fractional-cio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnContactRoute = EnContactRouteImport.update({
+  id: '/en/contact',
+  path: '/en/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnCasesRoute = EnCasesRouteImport.update({
+  id: '/en/cases',
+  path: '/en/cases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnAiAuditRoute = EnAiAuditRouteImport.update({
+  id: '/en/ai-audit',
+  path: '/en/ai-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnAboutRoute = EnAboutRouteImport.update({
+  id: '/en/about',
+  path: '/en/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ai-audit': typeof AiAuditRoute
+  '/cases': typeof CasesRoute
+  '/contact': typeof ContactRoute
+  '/fractional-cio': typeof FractionalCioRoute
+  '/it-diagnostic': typeof ItDiagnosticRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/ai-audit': typeof EnAiAuditRoute
+  '/en/cases': typeof EnCasesRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/fractional-cio': typeof EnFractionalCioRoute
+  '/en/it-diagnostic': typeof EnItDiagnosticRoute
+  '/en/': typeof EnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ai-audit': typeof AiAuditRoute
+  '/cases': typeof CasesRoute
+  '/contact': typeof ContactRoute
+  '/fractional-cio': typeof FractionalCioRoute
+  '/it-diagnostic': typeof ItDiagnosticRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/ai-audit': typeof EnAiAuditRoute
+  '/en/cases': typeof EnCasesRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/fractional-cio': typeof EnFractionalCioRoute
+  '/en/it-diagnostic': typeof EnItDiagnosticRoute
+  '/en': typeof EnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ai-audit': typeof AiAuditRoute
+  '/cases': typeof CasesRoute
+  '/contact': typeof ContactRoute
+  '/fractional-cio': typeof FractionalCioRoute
+  '/it-diagnostic': typeof ItDiagnosticRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/ai-audit': typeof EnAiAuditRoute
+  '/en/cases': typeof EnCasesRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/fractional-cio': typeof EnFractionalCioRoute
+  '/en/it-diagnostic': typeof EnItDiagnosticRoute
+  '/en/': typeof EnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/ai-audit'
+    | '/cases'
+    | '/contact'
+    | '/fractional-cio'
+    | '/it-diagnostic'
+    | '/en/about'
+    | '/en/ai-audit'
+    | '/en/cases'
+    | '/en/contact'
+    | '/en/fractional-cio'
+    | '/en/it-diagnostic'
+    | '/en/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/ai-audit'
+    | '/cases'
+    | '/contact'
+    | '/fractional-cio'
+    | '/it-diagnostic'
+    | '/en/about'
+    | '/en/ai-audit'
+    | '/en/cases'
+    | '/en/contact'
+    | '/en/fractional-cio'
+    | '/en/it-diagnostic'
+    | '/en'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/ai-audit'
+    | '/cases'
+    | '/contact'
+    | '/fractional-cio'
+    | '/it-diagnostic'
+    | '/en/about'
+    | '/en/ai-audit'
+    | '/en/cases'
+    | '/en/contact'
+    | '/en/fractional-cio'
+    | '/en/it-diagnostic'
+    | '/en/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AiAuditRoute: typeof AiAuditRoute
+  CasesRoute: typeof CasesRoute
+  ContactRoute: typeof ContactRoute
+  FractionalCioRoute: typeof FractionalCioRoute
+  ItDiagnosticRoute: typeof ItDiagnosticRoute
+  EnAboutRoute: typeof EnAboutRoute
+  EnAiAuditRoute: typeof EnAiAuditRoute
+  EnCasesRoute: typeof EnCasesRoute
+  EnContactRoute: typeof EnContactRoute
+  EnFractionalCioRoute: typeof EnFractionalCioRoute
+  EnItDiagnosticRoute: typeof EnItDiagnosticRoute
+  EnIndexRoute: typeof EnIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/it-diagnostic': {
+      id: '/it-diagnostic'
+      path: '/it-diagnostic'
+      fullPath: '/it-diagnostic'
+      preLoaderRoute: typeof ItDiagnosticRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fractional-cio': {
+      id: '/fractional-cio'
+      path: '/fractional-cio'
+      fullPath: '/fractional-cio'
+      preLoaderRoute: typeof FractionalCioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases': {
+      id: '/cases'
+      path: '/cases'
+      fullPath: '/cases'
+      preLoaderRoute: typeof CasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-audit': {
+      id: '/ai-audit'
+      path: '/ai-audit'
+      fullPath: '/ai-audit'
+      preLoaderRoute: typeof AiAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +263,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/it-diagnostic': {
+      id: '/en/it-diagnostic'
+      path: '/en/it-diagnostic'
+      fullPath: '/en/it-diagnostic'
+      preLoaderRoute: typeof EnItDiagnosticRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/fractional-cio': {
+      id: '/en/fractional-cio'
+      path: '/en/fractional-cio'
+      fullPath: '/en/fractional-cio'
+      preLoaderRoute: typeof EnFractionalCioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/contact': {
+      id: '/en/contact'
+      path: '/en/contact'
+      fullPath: '/en/contact'
+      preLoaderRoute: typeof EnContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/cases': {
+      id: '/en/cases'
+      path: '/en/cases'
+      fullPath: '/en/cases'
+      preLoaderRoute: typeof EnCasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/ai-audit': {
+      id: '/en/ai-audit'
+      path: '/en/ai-audit'
+      fullPath: '/en/ai-audit'
+      preLoaderRoute: typeof EnAiAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/about': {
+      id: '/en/about'
+      path: '/en/about'
+      fullPath: '/en/about'
+      preLoaderRoute: typeof EnAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AiAuditRoute: AiAuditRoute,
+  CasesRoute: CasesRoute,
+  ContactRoute: ContactRoute,
+  FractionalCioRoute: FractionalCioRoute,
+  ItDiagnosticRoute: ItDiagnosticRoute,
+  EnAboutRoute: EnAboutRoute,
+  EnAiAuditRoute: EnAiAuditRoute,
+  EnCasesRoute: EnCasesRoute,
+  EnContactRoute: EnContactRoute,
+  EnFractionalCioRoute: EnFractionalCioRoute,
+  EnItDiagnosticRoute: EnItDiagnosticRoute,
+  EnIndexRoute: EnIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

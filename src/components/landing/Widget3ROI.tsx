@@ -1,35 +1,78 @@
-import { useState, useMemo } from "react";
-import { useI18n } from "../../lib/i18n";
+import { useMemo, useState } from "react";
 import { fmtNum, fmtRub } from "../../lib/format";
+import { useI18n } from "../../lib/i18n";
 
-const AUTOMATION = 0.62; // McKinsey benchmark, conservative lower bound
-const QUALITY_LOSS = 0.18; // share of cost lost to errors/rework
-const QUALITY_RECOV = 0.4; // fraction of quality loss recovered with AI
-const WEEKS = 47; // working weeks/year
-const IMPL_BASE = 850_000; // base implementation cost (₽)
-const IMPL_PER_PERSON = 34_000; // ≈ size × 0.04 of base
+const AUTOMATION = 0.62;
+const QUALITY_LOSS = 0.18;
+const QUALITY_RECOVERY = 0.4;
+const WEEKS = 47;
+const IMPLEMENTATION_BASE = 850_000;
+const IMPLEMENTATION_PER_PERSON = 34_000;
 
 export function Widget3ROI({ onCta }: { onCta: () => void }) {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const [team, setTeam] = useState(35);
   const [hours, setHours] = useState(12);
   const [rate, setRate] = useState(1800);
+  const [calculated, setCalculated] = useState(false);
+
+  const copy =
+    lang === "ru"
+      ? {
+          calculate: "Рассчитать иллюстративный сценарий",
+          waiting: "Заполните исходные данные и запустите расчёт",
+          waitingText:
+            "До нажатия кнопки сайт не показывает экономию и окупаемость. Значения 62%, 18% и 40% — явные допущения иллюстративного сценария, а не прогноз для вашей компании.",
+          formula:
+            "Формула: сотрудники × часы рутины × 47 рабочих недель × стоимость часа. Эффект = 62% этой базы + возврат 40% от условных 18% потерь на ошибки.",
+          sensitivity:
+            "Чувствительность: если фактическая доля автоматизации или возврата потерь ниже, экономия уменьшается пропорционально, а срок окупаемости растёт.",
+          stop: "Не начинать проект, если нет владельца процесса, исходных данных, измеримой метрики или приемлемого сценария интеграции и безопасности.",
+          recalc: "Пересчитать после изменения исходных данных",
+        }
+      : {
+          calculate: "Calculate the illustrative scenario",
+          waiting: "Enter assumptions and run the calculation",
+          waitingText:
+            "No savings or payback result is shown before you click calculate. The 62%, 18%, and 40% values are explicit illustrative assumptions, not a forecast for your company.",
+          formula:
+            "Formula: employees × routine hours × 47 working weeks × hourly cost. Impact = 62% of that base plus recovery of 40% of an assumed 18% loss from error and rework.",
+          sensitivity:
+            "Sensitivity: lower actual automation or recovery reduces savings proportionally and extends payback.",
+          stop: "Do not start without a process owner, baseline data, a measurable success metric, and an acceptable integration and security approach.",
+          recalc: "Recalculate after changing assumptions",
+        };
 
   const calc = useMemo(() => {
     const current = team * hours * WEEKS * rate;
     const automationSaving = current * AUTOMATION;
-    const errorSaving = current * QUALITY_LOSS * QUALITY_RECOV;
+    const errorSaving = current * QUALITY_LOSS * QUALITY_RECOVERY;
     const total = automationSaving + errorSaving;
-    const impl = Math.min(4_500_000, IMPL_BASE + team * IMPL_PER_PERSON);
-    const payback = Math.max(1, Math.round((impl / total) * 12));
+    const implementation = Math.min(
+      4_500_000,
+      IMPLEMENTATION_BASE + team * IMPLEMENTATION_PER_PERSON,
+    );
+    const payback = Math.max(1, Math.round((implementation / total) * 12));
     const afterPct = Math.max(8, Math.round((1 - AUTOMATION) * 100));
-    return { current, automationSaving, errorSaving, total, impl, payback, afterPct };
+    return {
+      current,
+      automationSaving,
+      errorSaving,
+      total,
+      implementation,
+      payback,
+      afterPct,
+    };
   }, [team, hours, rate]);
 
+  const change = (setter: (value: number) => void) => (value: number) => {
+    setter(value);
+    setCalculated(false);
+  };
+
   return (
-    <div className="rounded-xl border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/60 p-6 md:p-8">
-      <div className="grid lg:grid-cols-[1fr_1.15fr] gap-8">
-        {/* Inputs */}
+    <div className="rounded-md border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)]/60 p-6 md:p-8">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.15fr]">
         <div className="space-y-6">
           <SliderRow
             label={t.roi.teamSize}
@@ -37,7 +80,7 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
             min={5}
             max={200}
             step={1}
-            onChange={setTeam}
+            onChange={change(setTeam)}
             display={`${team}`}
           />
           <SliderRow
@@ -46,8 +89,8 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
             min={2}
             max={25}
             step={1}
-            onChange={setHours}
-            display={`${hours} ч`}
+            onChange={change(setHours)}
+            display={`${hours} ${lang === "ru" ? "ч" : "h"}`}
           />
           <SliderRow
             label={t.roi.rate}
@@ -55,49 +98,21 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
             min={500}
             max={5000}
             step={100}
-            onChange={setRate}
+            onChange={change(setRate)}
             display={`${fmtNum(rate)} ₽`}
           />
-
-          {/* Inefficiency bar */}
-          <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] p-4 space-y-3">
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
-                <span className="text-[var(--color-accent-amber)]">{t.roi.currentBar}</span>
-                <span className="text-[var(--color-text-mono)] tabular-nums">100%</span>
-              </div>
-              <div className="h-3 rounded-sm bg-[var(--color-surface-sunken-soft)] overflow-hidden border border-[var(--color-border-subtle)]">
-                <div
-                  className="h-full bg-[var(--color-accent-amber)]/80"
-                  style={{ width: "100%" }}
-                />
-              </div>
-            </div>
-
-            <div className="relative pl-3">
-              <div className="absolute left-0 top-0 bottom-0 w-px border-l border-dashed border-[var(--color-accent-amber)]/40 animate-pulse" />
-              <span className="font-mono text-[9px] tracking-[0.12em] uppercase text-[var(--color-text-mono)]">
-                {t.roi.deadZone}
-              </span>
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.1em] uppercase">
-                <span className="text-[var(--color-accent-teal)]">{t.roi.afterBar}</span>
-                <span className="text-[var(--color-text-mono)] tabular-nums">{calc.afterPct}%</span>
-              </div>
-              <div className="h-3 rounded-sm bg-[var(--color-surface-sunken-soft)] overflow-hidden border border-[var(--color-border-subtle)]">
-                <div
-                  className="h-full bg-[var(--color-accent-teal)] transition-all duration-500"
-                  style={{ width: `${calc.afterPct}%` }}
-                />
-              </div>
-            </div>
+          <button
+            type="button"
+            onClick={() => setCalculated(true)}
+            className="w-full rounded-md border border-[var(--color-accent-indigo)] bg-[var(--color-accent-indigo-soft)] px-5 py-3 text-[14px] font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-surface-soft-hover)]"
+          >
+            {calculated ? copy.recalc : copy.calculate}
+          </button>
+          <div className="space-y-3 border-t border-[var(--color-border-subtle)] pt-5 text-[11px] leading-relaxed text-[var(--color-text-mono)]">
+            <p>{copy.formula}</p>
+            <p>{copy.sensitivity}</p>
+            <p>{copy.stop}</p>
           </div>
-
-          <p className="text-[11px] font-mono leading-relaxed text-[var(--color-text-mono)] border-t border-[var(--color-border-subtle)] pt-4">
-            {t.roi.disclaimer}
-          </p>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-[var(--color-text-mono)]">
             {t.roi.sources.map((source) => (
               <a
@@ -113,50 +128,49 @@ export function Widget3ROI({ onCta }: { onCta: () => void }) {
           </div>
         </div>
 
-        {/* Outputs */}
-        <div className="space-y-3">
-          <Stat label={t.roi.currentCost} value={fmtRub(calc.current)} tone="amber" />
-          <Stat label={t.roi.saving} value={fmtRub(calc.automationSaving)} tone="teal" sub="−62%" />
-          <Stat label={t.roi.errorSaving} value={fmtRub(calc.errorSaving)} tone="teal" small />
-
-          <div className="rounded-md border border-[var(--color-accent-teal)]/40 bg-[var(--color-accent-teal)]/8 px-4 py-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-accent-teal)] mb-1">
-              {t.roi.totalSaving}
-            </div>
-            <div className="font-mono text-[30px] md:text-[36px] tabular-nums leading-none text-[var(--color-text-primary)]">
-              {fmtRub(calc.total)}
+        {!calculated ? (
+          <div className="flex min-h-[360px] items-center rounded-md border border-dashed border-[var(--color-border-emphasis)] bg-[var(--color-surface-sunken)] p-6">
+            <div>
+              <div className="font-mono text-[11px] text-[var(--color-accent-indigo)]">
+                {copy.waiting}
+              </div>
+              <p className="mt-4 max-w-[520px] text-[14px] leading-relaxed text-[var(--color-text-secondary)]">
+                {copy.waitingText}
+              </p>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
-              <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
-                {t.roi.implCost}
+        ) : (
+          <div className="space-y-3" aria-live="polite">
+            <Stat label={t.roi.currentCost} value={fmtRub(calc.current)} tone="amber" />
+            <Stat
+              label={t.roi.saving}
+              value={fmtRub(calc.automationSaving)}
+              tone="teal"
+              sub="62% scenario"
+            />
+            <Stat label={t.roi.errorSaving} value={fmtRub(calc.errorSaving)} tone="teal" small />
+            <div className="rounded-md border border-[var(--color-accent-teal)]/40 bg-[var(--color-accent-teal)]/8 px-4 py-4">
+              <div className="mb-1 font-mono text-[10px] uppercase text-[var(--color-accent-teal)]">
+                {t.roi.totalSaving}
               </div>
-              <div className="font-mono text-[16px] tabular-nums text-[var(--color-text-primary)]">
-                {fmtRub(calc.impl)}
-              </div>
-            </div>
-            <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
-              <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
-                {t.roi.payback}
-              </div>
-              <div className="font-mono text-[16px] tabular-nums text-[var(--color-text-primary)]">
-                {calc.payback}{" "}
-                <span className="text-[12px] text-[var(--color-text-secondary)]">
-                  {t.roi.months}
-                </span>
+              <div className="font-mono text-[30px] leading-none md:text-[36px]">
+                {fmtRub(calc.total)}
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-3">
+              <Output label={t.roi.implCost} value={fmtRub(calc.implementation)} />
+              <Output label={t.roi.payback} value={`${calc.payback} ${t.roi.months}`} />
+            </div>
+            <button
+              type="button"
+              onClick={onCta}
+              className="mt-2 w-full rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] hover:bg-[var(--color-btn-primary-hover)]"
+            >
+              {lang === "ru" ? "Разобрать ИТ-ситуацию" : "Discuss your IT situation"}{" "}
+              <span aria-hidden="true">→</span>
+            </button>
           </div>
-
-          <button
-            onClick={onCta}
-            className="w-full mt-2 rounded-md bg-[var(--color-btn-primary)] px-5 py-3 text-[14px] font-medium text-[var(--color-btn-primary-fg)] transition-colors hover:bg-[var(--color-btn-primary-hover)]"
-          >
-            {t.roi.cta} →
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -176,17 +190,15 @@ function SliderRow({
   min: number;
   max: number;
   step: number;
-  onChange: (n: number) => void;
+  onChange: (value: number) => void;
   display: string;
 }) {
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-2">
+      <label className="mb-2 flex items-baseline justify-between gap-3">
         <span className="text-[13px] text-[var(--color-text-secondary)]">{label}</span>
-        <span className="font-mono text-[13px] tabular-nums text-[var(--color-text-primary)]">
-          {display}
-        </span>
-      </div>
+        <span className="font-mono text-[13px]">{display}</span>
+      </label>
       <input
         type="range"
         className="techno"
@@ -194,8 +206,20 @@ function SliderRow({
         max={max}
         step={step}
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(event) => onChange(Number(event.target.value))}
+        aria-label={label}
       />
+    </div>
+  );
+}
+
+function Output({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
+      <div className="mb-1 font-mono text-[9px] uppercase text-[var(--color-text-mono)]">
+        {label}
+      </div>
+      <div className="font-mono text-[16px]">{value}</div>
     </div>
   );
 }
@@ -213,21 +237,21 @@ function Stat({
   sub?: string;
   small?: boolean;
 }) {
-  const color = tone === "teal" ? "#14B8A6" : "#F59E0B";
+  const color = tone === "teal" ? "var(--color-accent-teal)" : "var(--color-accent-amber)";
   return (
     <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] px-4 py-3">
-      <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--color-text-mono)] mb-1">
+      <div className="mb-1 font-mono text-[9px] uppercase text-[var(--color-text-mono)]">
         {label}
       </div>
       <div className="flex items-baseline gap-3">
         <div
-          className="font-mono tabular-nums leading-none"
+          className="font-mono leading-none"
           style={{ color, fontSize: small ? "20px" : "24px" }}
         >
           {value}
         </div>
         {sub && (
-          <span className="font-mono text-[12px]" style={{ color }}>
+          <span className="font-mono text-[11px]" style={{ color }}>
             {sub}
           </span>
         )}

@@ -1774,16 +1774,26 @@ const dict = {
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: Dict };
 const I18nCtx = createContext<Ctx | null>(null);
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("ru");
+export function I18nProvider({
+  children,
+  initialLang,
+}: {
+  children: ReactNode;
+  initialLang?: Lang;
+}) {
+  const [lang, setLangState] = useState<Lang>(initialLang ?? "ru");
   useEffect(() => {
+    if (initialLang) {
+      setLangState(initialLang);
+      return;
+    }
     try {
       const saved = localStorage.getItem("lang") as Lang | null;
       if (saved === "ru" || saved === "en") setLangState(saved);
     } catch {
       // localStorage can be unavailable during SSR or in hardened browsers.
     }
-  }, []);
+  }, [initialLang]);
   const setLang = (l: Lang) => {
     setLangState(l);
     try {

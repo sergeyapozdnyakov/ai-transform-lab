@@ -5,6 +5,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   cloudflare: false,
+  vite: {
+    ssr: { noExternal: true },
+  },
   tanstackStart: {
     server: { entry: "server" },
   },

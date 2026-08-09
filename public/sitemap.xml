@@ -1,57 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://pozdnyakov.io/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pozdnyakov.io/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://pozdnyakov.io/en" />
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/sample-audit-report.html</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://pozdnyakov.io/fractional-cio</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pozdnyakov.io/fractional-cio" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://pozdnyakov.io/en/fractional-cio" />
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/ai-process-checklist.html</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://pozdnyakov.io/ai-audit</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pozdnyakov.io/ai-audit" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://pozdnyakov.io/en/ai-audit" />
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/nda-template.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://pozdnyakov.io/cases</loc>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/data-policy.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://pozdnyakov.io/it-diagnostic</loc>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/sample-audit-report-en.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://pozdnyakov.io/about</loc>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/ai-process-checklist-en.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <loc>https://pozdnyakov.io/contact</loc>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pozdnyakov.io/docs/nda-template-en.html</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://pozdnyakov.io/en</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://pozdnyakov.io/docs/data-policy-en.html</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
+  <url><loc>https://pozdnyakov.io/en/fractional-cio</loc><lastmod>2026-07-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://pozdnyakov.io/en/ai-audit</loc><lastmod>2026-07-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://pozdnyakov.io/en/cases</loc><lastmod>2026-07-23</lastmod><priority>0.6</priority></url>
+  <url><loc>https://pozdnyakov.io/en/it-diagnostic</loc><lastmod>2026-07-23</lastmod><priority>0.6</priority></url>
+  <url><loc>https://pozdnyakov.io/en/about</loc><lastmod>2026-07-23</lastmod><priority>0.6</priority></url>
+  <url><loc>https://pozdnyakov.io/en/contact</loc><lastmod>2026-07-23</lastmod><priority>0.6</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/first-90-days.html</loc><lastmod>2026-07-23</lastmod><priority>0.5</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/first-90-days-en.html</loc><lastmod>2026-07-23</lastmod><priority>0.4</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/sample-audit-report.html</loc><lastmod>2026-06-01</lastmod><priority>0.5</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/sample-audit-report-en.html</loc><lastmod>2026-06-01</lastmod><priority>0.4</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/nda-template.html</loc><lastmod>2026-06-01</lastmod><priority>0.3</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/nda-template-en.html</loc><lastmod>2026-06-01</lastmod><priority>0.3</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/data-policy.html</loc><lastmod>2026-06-01</lastmod><priority>0.3</priority></url>
+  <url><loc>https://pozdnyakov.io/docs/data-policy-en.html</loc><lastmod>2026-06-01</lastmod><priority>0.3</priority></url>
 </urlset>

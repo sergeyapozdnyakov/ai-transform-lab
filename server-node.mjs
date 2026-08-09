@@ -1,11 +1,8 @@
-// Deploy-only Node adapter: serves the TanStack Start SSR fetch-handler over
-// node:http and serves static client assets from dist/client.
-// Build first: vite build --config vite.config.node.ts
-// Run: node server-node.mjs   (PORT, HOST env optional)
+// Deploy-only Node adapter: serves the TanStack Start SSR handler and static client assets.
 import { createServer } from "node:http";
 import { Readable } from "node:stream";
-import { stat, readFile } from "node:fs/promises";
-import { join, normalize, extname } from "node:path";
+import { readFile, stat } from "node:fs/promises";
+import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 import handler from "./dist/server/server.js";
 
@@ -15,6 +12,10 @@ const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 const CRM_CONTACT_ENDPOINT =
   process.env.CRM_CONTACT_ENDPOINT || "http://crm:3000/api/leads/contact";
+const CONTACT_FALLBACK_EMAIL = process.env.CONTACT_FALLBACK_EMAIL || "ai@pozdnyakov.io";
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT = 5;
+const requestLog = new Map();
 
 const MIME = {
   ".js": "text/javascript",
@@ -50,35 +51,35 @@ async function resolveStatic(pathname) {
     return null;
   }
   try {
-    const s = await stat(filePath);
-    if (s.isFile()) return filePath;
+    const value = await stat(filePath);
+    if (value.isFile()) return filePath;
   } catch {
-    /* not a static file */
+    // The request may be an application route.
   }
   return null;
 }
 
-function toWebRequest(req) {
-  const url = `http://${req.headers.host || "localhost"}${req.url}`;
+function toWebRequest(request) {
+  const url = `http://${request.headers.host || "localhost"}${request.url}`;
   const headers = new Headers();
-  for (const [k, v] of Object.entries(req.headers)) {
-    if (Array.isArray(v)) v.forEach((x) => headers.append(k, x));
-    else if (v != null) headers.set(k, v);
+  for (const [key, value] of Object.entries(request.headers)) {
+    if (Array.isArray(value)) value.forEach((item) => headers.append(key, item));
+    else if (value != null) headers.set(key, value);
   }
-  const method = req.method || "GET";
+  const method = request.method || "GET";
   const hasBody = method !== "GET" && method !== "HEAD";
   return new Request(url, {
     method,
     headers,
-    body: hasBody ? Readable.toWeb(req) : undefined,
+    body: hasBody ? Readable.toWeb(request) : undefined,
     duplex: hasBody ? "half" : undefined,
   });
 }
 
-async function readJsonBody(req) {
+async function readJsonBody(request) {
   const chunks = [];
   let size = 0;
-  for await (const chunk of req) {
+  for await (const chunk of request) {
     size += chunk.length;
     if (size > 20_000) throw new Error("Payload too large");
     chunks.push(chunk);
@@ -87,82 +88,187 @@ async function readJsonBody(req) {
   return text ? JSON.parse(text) : {};
 }
 
-function writeJson(res, status, body) {
-  res.writeHead(status, { "content-type": "application/json; charset=utf-8" });
-  res.end(JSON.stringify(body));
+function writeJson(response, status, body) {
+  response.writeHead(status, {
+    "content-type": "application/json; charset=utf-8",
+    "cache-control": "no-store",
+  });
+  response.end(JSON.stringify(body));
 }
 
-async function handleContactApi(req, res) {
-  if (req.method === "OPTIONS") {
-    res.writeHead(204, {
+function clientKey(request) {
+  const forwarded = String(request.headers["x-forwarded-for"] || "")
+    .split(",")[0]
+    .trim();
+  return forwarded || request.socket.remoteAddress || "unknown";
+}
+
+function isRateLimited(key) {
+  const now = Date.now();
+  const recent = (requestLog.get(key) || []).filter((time) => now - time < RATE_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT) return true;
+  recent.push(now);
+  requestLog.set(key, recent);
+  return false;
+}
+
+function limitedString(value, max) {
+  return typeof value === "string" ? value.trim().slice(0, max) : "";
+}
+
+function safeUtm(value) {
+  if (!value || Array.isArray(value) || typeof value !== "object") return {};
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter(([key, item]) => key.toLowerCase().startsWith("utm_") && typeof item === "string")
+      .slice(0, 8)
+      .map(([key, item]) => [key.slice(0, 64), item.trim().slice(0, 200)]),
+  );
+}
+
+function validateContactPayload(input) {
+  if (!input || Array.isArray(input) || typeof input !== "object") {
+    return { error: "Invalid request body" };
+  }
+
+  const payload = {
+    name: limitedString(input.name, 200),
+    company: limitedString(input.company, 300),
+    contact: limitedString(input.email, 255),
+    team: limitedString(input.team, 500),
+    desc: limitedString(input.desc, 2000),
+    situation: limitedString(input.situation, 300),
+    service: limitedString(input.service, 80),
+    source: limitedString(input.source, 80),
+    language: limitedString(input.language, 8),
+    pageUrl: limitedString(input.pageUrl, 1000),
+    websiteFax: limitedString(input.websiteFax, 200),
+    utm: safeUtm(input.utm),
+  };
+
+  if (payload.websiteFax) return { spam: true };
+  if (!payload.name || !payload.company || !payload.team || !payload.desc || !payload.situation) {
+    return { error: "Missing required fields" };
+  }
+
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.contact);
+  const isTelegram = /^@?[a-zA-Z0-9_]{5,}$/.test(payload.contact);
+  if (!isEmail && !isTelegram) return { error: "Invalid contact" };
+
+  const contactNote = isTelegram ? `Telegram: ${payload.contact.replace(/^@?/, "@")}\n` : "";
+  return {
+    payload: {
+      name: payload.name,
+      company: payload.company,
+      email: isEmail ? payload.contact : CONTACT_FALLBACK_EMAIL,
+      team: payload.team,
+      desc: [
+        contactNote,
+        payload.situation ? `Situation: ${payload.situation}` : "",
+        payload.service ? `Service: ${payload.service}` : "",
+        payload.source ? `Source: ${payload.source}` : "",
+        "",
+        payload.desc,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+      language: payload.language,
+      pageUrl: payload.pageUrl,
+      utm: payload.utm,
+    },
+  };
+}
+
+async function handleContactApi(request, response) {
+  if (request.method === "OPTIONS") {
+    response.writeHead(204, {
       "access-control-allow-methods": "POST, OPTIONS",
       "access-control-allow-headers": "content-type",
       "access-control-max-age": "86400",
     });
-    res.end();
+    response.end();
     return true;
   }
 
-  if (req.method !== "POST") {
-    writeJson(res, 405, { error: "Method not allowed" });
+  if (request.method !== "POST") {
+    writeJson(response, 405, { error: "Method not allowed" });
     return true;
   }
 
-  const payload = await readJsonBody(req);
+  if (isRateLimited(clientKey(request))) {
+    writeJson(response, 429, { error: "Too many requests" });
+    return true;
+  }
+
+  const result = validateContactPayload(await readJsonBody(request));
+  if (result.spam) {
+    writeJson(response, 202, { ok: true });
+    return true;
+  }
+  if (result.error) {
+    writeJson(response, 400, { error: result.error });
+    return true;
+  }
+
   const crmResponse = await fetch(CRM_CONTACT_ENDPOINT, {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      ...(process.env.CRM_INTAKE_SECRET ? { "x-intake-secret": process.env.CRM_INTAKE_SECRET } : {}),
+      ...(process.env.CRM_INTAKE_SECRET
+        ? { "x-intake-secret": process.env.CRM_INTAKE_SECRET }
+        : {}),
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(result.payload),
   });
 
   const text = await crmResponse.text();
-  res.writeHead(crmResponse.status, {
+  response.writeHead(crmResponse.status, {
     "content-type": crmResponse.headers.get("content-type") || "application/json; charset=utf-8",
+    "cache-control": "no-store",
   });
-  res.end(text);
+  response.end(text);
   return true;
 }
 
-const server = createServer(async (req, res) => {
+const server = createServer(async (request, response) => {
   try {
-    const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+    const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
 
     if (url.pathname === "/api/contact") {
-      await handleContactApi(req, res);
+      await handleContactApi(request, response);
       return;
     }
 
-    if (req.method === "GET" || req.method === "HEAD") {
+    if (request.method === "GET" || request.method === "HEAD") {
       const file = await resolveStatic(url.pathname);
       if (file) {
         const type = MIME[extname(file).toLowerCase()] || "application/octet-stream";
         const immutable = url.pathname.startsWith("/assets/");
-        res.writeHead(200, {
+        response.writeHead(200, {
           "content-type": type,
           "cache-control": immutable
             ? "public, max-age=31536000, immutable"
             : "public, max-age=3600",
         });
-        res.end(req.method === "HEAD" ? undefined : await readFile(file));
+        response.end(request.method === "HEAD" ? undefined : await readFile(file));
         return;
       }
     }
 
-    const webRes = await handler.fetch(toWebRequest(req), process.env, {});
-    res.statusCode = webRes.status;
-    webRes.headers.forEach((value, key) => res.setHeader(key, value));
-    if (webRes.body) {
-      Readable.fromWeb(webRes.body).pipe(res);
+    const webResponse = await handler.fetch(toWebRequest(request), process.env, {});
+    response.statusCode = webResponse.status;
+    webResponse.headers.forEach((value, key) => response.setHeader(key, value));
+    if (webResponse.body) {
+      Readable.fromWeb(webResponse.body).pipe(response);
     } else {
-      res.end(await webRes.text());
+      response.end(await webResponse.text());
     }
-  } catch (err) {
-    console.error("[server-node] request failed:", err);
-    if (!res.headersSent) res.writeHead(500, { "content-type": "text/html; charset=utf-8" });
-    res.end("Internal Server Error");
+  } catch (error) {
+    console.error("[server-node] request failed:", error);
+    if (!response.headersSent) {
+      response.writeHead(500, { "content-type": "text/html; charset=utf-8" });
+    }
+    response.end("Internal Server Error");
   }
 });
 

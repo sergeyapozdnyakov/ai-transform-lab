@@ -873,7 +873,7 @@ export function Expert({ openModal }: { openModal: () => void }) {
                 <figure className="float-none md:float-left md:mr-7 md:mb-3 mx-auto md:mx-0 w-[200px] md:w-[240px] mb-5">
                   <div className="relative rounded-xl overflow-hidden border border-[var(--color-border-emphasis)] bg-[var(--color-bg-elevated)] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] aspect-square">
                     <img
-                      src="/expert-photo.jpg"
+                      src="/sergey-pozdnyakov-2026.jpg"
                       alt="Сергей Поздняков — AI-консультант"
                       width={768}
                       height={768}

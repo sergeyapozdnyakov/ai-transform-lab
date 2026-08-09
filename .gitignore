@@ -2,6 +2,7 @@
 logs
 *.log
 qa-mobile-*.png
+.qa/
 .gstack/
 npm-debug.log*
 yarn-debug.log*
